@@ -109,11 +109,14 @@ D'autres partie tous ensemble.
 Chacun vérifira le travail des autres afin de proposer ou non des solutions adaptés ou des manières de faire. 
 Les choix sont soumis au vote et des débats ont lieu où nos arguments sont mis en avant.
 
+TODO mettre une capture ou non schema pour illustrer
 
 ## Organisation du dépôt git 
 
 Nous allons nous organiser par branch avec approbation de chacun des membres du groupe pour merger les élements sur le dépot GIT. 
 Chaque partie sera hiérarchisée et mis dans des dossiers spécifiques. 
+
+TODO mettre une capture ou un schema pour montrer l'organisation
 
 ## Organisation du cycle de vie
 
