@@ -3,6 +3,7 @@
 Ce document présente le projet file du groupe 4. 
 Il a pour but de donner des détails sur l'ensemble de l'organisation, des tâches à effectuer, de la répartition des tâches etc...
 
+---
 
 # QUI
 
@@ -25,6 +26,8 @@ Participation de tous les membres de l'équipe sur toutes les parties.
 ## Responsabilité de chacun
 
 Même responsabilité pour chacun des membres du groupe
+
+---
 
 # QUOI
 
@@ -50,6 +53,8 @@ https://app.moqups.com/N4kz3IgJ1G/view/page/a29d6f3c2
 (Packages au format compressé?)
 Image généré avec l'application stocké sur un dépot
 
+---
+
 # QUAND
 
 ##  Durée des sprints 
@@ -59,6 +64,21 @@ Image généré avec l'application stocké sur un dépot
 ## Date releases
 
 ## Organisation des sprints
+
+* Sprint 1 [1 semaine?]
+    - #3 [3 pts] - Récupération des fichiers markdown dans l'application
+    - #4 [3 pts] - Convertir les fichiers markdown en fichiers html et gérer les liens hypertexte
+    - #5 [3 pts] - Envoyer les fichiers html dans un bucket sur le cloud
+    - #9 [3 pts] - Création du DockerFile
+    - #10 [3 pts] - Build de l'image Docker
+    - #2 [5 pts] - Gérer l'authentification des admins
+    - #7 [3 pts] - Gestion de la table des matières
+
+* Sprint 2 []
+
+* Sprint 3 []
+
+---
 
 # Comment 
 
