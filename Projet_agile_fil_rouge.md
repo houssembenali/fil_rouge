@@ -1,8 +1,14 @@
+# Introduction 
+
+Ce document présente le projet file du groupe 4. 
+Il a pour but de donner des détails sur l'ensemble de l'organisation, des tâches à effectuer, de la répartition des tâches etc...
+
+
 # QUI
 
 ## Rôles
 
-Même rôle pour tous
+Devops
 
 
 ## Composition de l'équipe :
@@ -13,7 +19,6 @@ Même rôle pour tous
 - Arnaud DEGEZ
 
 ## Répartition :
-
 
 Participation de tous les membres de l'équipe sur toutes les parties.
 
@@ -30,6 +35,8 @@ Cf issue github
 
 Cf fichier Archi technique
 
+https://app.moqups.com/N4kz3IgJ1G/view/page/a29d6f3c2
+
 ## Définition du "Done"
 
 - Revue du code effectuée
@@ -40,7 +47,7 @@ Cf fichier Archi technique
 
 ## Livrables
 
-Packages au format compressé?
+(Packages au format compressé?)
 Image généré avec l'application stocké sur un dépot
 
 # QUAND
@@ -59,6 +66,8 @@ Image généré avec l'application stocké sur un dépot
 
 ### Gestion de projet
 
+La gestion du projet s'effectue avec Github
+
 ### Partage des documents 
 
 - teams 
@@ -69,6 +78,8 @@ Image généré avec l'application stocké sur un dépot
 - git hub
 
 ### Intégration continue
+
+Jenkins
 
 ## Organisation de l'équipe 
 
