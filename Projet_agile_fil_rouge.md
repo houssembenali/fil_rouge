@@ -2,8 +2,7 @@
 
 ## Rôles
 
-- équipe dev 
-- équipe intégration
+Même rôle pour tous
 
 
 ## Composition de l'équipe :
@@ -15,13 +14,12 @@
 
 ## Répartition :
 
-- Partie Python
-- Partie Kubernetes
-- Partie Docker
-- Partie Jenkins
+
+Participation de tous les membres de l'équipe sur toutes les parties.
 
 ## Responsabilité de chacun
 
+Même responsabilité pour chacun des membres du groupe
 
 # QUOI
 
