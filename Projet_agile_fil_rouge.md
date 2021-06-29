@@ -26,35 +26,7 @@
 # QUOI
 
 ## BACKLOG
-### Administrateurs :
-#### Projets :
-
-- Création projets/repos
-- droits répo
-- copie fichier depuis un dépot dans le repot 
-
-## Environnement : 
-### Docker :
-- creation dockerfile
-    - choix de l'image : avec python et flask
-
-### Kubernetes : 
-- creation fichier pour deploiement de pod docker avec l'appli
-    - ouverture des ports
-    - instances
-
-
-### Jenkins : 
-- pipeline : 
-    - lancement build application (si update)
-    - lancement action application
-    - lancement test 
-    - lancement du package de l'apply (si update)
-
-### Python:
-- creation menu
-- class objet :
-    - 
+Cf issue github
     
 ## Architecture technique
 
@@ -62,15 +34,15 @@ Cf fichier Archi technique
 
 ## Définition du "Done"
 
-L'application a pour but de permettre la génération facile de site html à partir de fichiers au format markdown.
-Elle doit permettre aussi de pouvoir hiérarchiser les différentes pages html dans un même projet.
-L'administrateur a pour mission de créer les projets et les zones de stockages des fichiers html.
-L'administrateur pourra aussi accèder aux logs de l'application.
-La partie statistique (nb de vue sur site, fréquence) sera visible par les rédacteurs.
+- Revue du code effectuée
+- Les critères d’acceptation de la User Story sont tous validés
+- Les différents tests ont été finalisés et acceptés par les acteurs de la qualité du produit (QA, PO, développeurs)
+- La documentation a été mise à jour
+- Livré sur un environnement stable
 
 ## Livrables
 
-Packages au format compressé
+Packages au format compressé?
 Image généré avec l'application stocké sur un dépot
 
 # QUAND
@@ -104,5 +76,5 @@ Image généré avec l'application stocké sur un dépot
 
 ## Organisation du dépôt git 
 
-## Organisation du cycle de de vie
+## Organisation du cycle de vie
 
