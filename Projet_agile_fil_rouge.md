@@ -103,7 +103,17 @@ Jenkins
 
 ## Organisation de l'équipe 
 
+Nous avons convenu de travailler chacun sur toutes les parties. 
+Certaines parties seront faite en binôme. 
+D'autres partie tous ensemble.
+Chacun vérifira le travail des autres afin de proposer ou non des solutions adaptés ou des manières de faire. 
+Les choix sont soumis au vote et des débats ont lieu où nos arguments sont mis en avant.
+
+
 ## Organisation du dépôt git 
+
+Nous allons nous organiser par branch avec approbation de chacun des membres du groupe pour merger les élements sur le dépot GIT. 
+Chaque partie sera hiérarchisée et mis dans des dossiers spécifiques. 
 
 ## Organisation du cycle de vie
 
