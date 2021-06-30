@@ -42,11 +42,13 @@ https://app.moqups.com/N4kz3IgJ1G/view/page/a29d6f3c2
 
 ## Définition du "Done"
 
-- Revue du code effectuée
-- Les critères d’acceptation de la User Story sont tous validés
-- Les différents tests ont été finalisés et acceptés par les acteurs de la qualité du produit (QA, PO, développeurs)
-- La documentation a été mise à jour
-- Livré sur un environnement stable
+- Revue de code faite
+- Branche mergée
+- Critères d'acceptance validés
+- Tests unitaires et fonctionnels écrits, revus, mergés (quand tests il peut y avoir)
+- Tests unitaires, fonctionnels, nouveaux et anciens (tests de régression) passent
+- Maquettes graphiques respectées (quand aspect graphique il y a)
+- (Documentation mise à jour/créée et revue)
 
 ## Livrables
 
@@ -65,7 +67,7 @@ Image généré avec l'application stocké sur un dépot
 
 ## Organisation des sprints
 
-* Sprint 1 [1 semaine?]
+* Sprint 1 [2 semaine]
     - #3 [3 pts] - Récupération des fichiers markdown dans l'application
     - #4 [3 pts] - Convertir les fichiers markdown en fichiers html et gérer les liens hypertexte
     - #5 [3 pts] - Envoyer les fichiers html dans un bucket sur le cloud
@@ -109,7 +111,7 @@ D'autres partie tous ensemble.
 Chacun vérifira le travail des autres afin de proposer ou non des solutions adaptés ou des manières de faire. 
 Les choix sont soumis au vote et des débats ont lieu où nos arguments sont mis en avant.
 
-TODO mettre une capture ou non schema pour illustrer
+TODO mettre une capture ou un schema pour illustrer
 
 ## Organisation du dépôt git 
 
