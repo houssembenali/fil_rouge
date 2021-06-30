@@ -40,6 +40,8 @@ Cf fichier Archi technique
 
 https://app.moqups.com/N4kz3IgJ1G/view/page/a29d6f3c2
 
+<img src="https://github.com/houssembenali/fil_rouge/blob/main/Architecture-technique-file-rouge.png?raw=true"/>
+
 ## Définition du "Done"
 
 - Revue de code faite
@@ -103,6 +105,10 @@ La gestion du projet s'effectue avec Github
 
 Jenkins
 
+### Cloud 
+
+aws justifiez ce choix.
+
 ## Organisation de l'équipe 
 
 Nous avons convenu de travailler chacun sur toutes les parties. 
@@ -115,10 +121,23 @@ TODO mettre une capture ou un schema pour illustrer
 
 ## Organisation du dépôt git 
 
-Nous allons nous organiser par branch avec approbation de chacun des membres du groupe pour merger les élements sur le dépot GIT. 
+Nous allons nous organiser par branch avec approbation d'un des membres du groupe pour merger les élements sur le dépot GIT. 
 Chaque partie sera hiérarchisée et mis dans des dossiers spécifiques. 
 
 TODO mettre une capture ou un schema pour montrer l'organisation
 
 ## Organisation du cycle de vie
+
+reprendre le backlog pour exprimer le besoin metier (non technique)
+vision produit 
+besoin fonctionnel
+
+action attendu
+
+
+detail ne pas oublier les access key et secret
+
+
+comparaison entre Azure et aws
+pour la même prestation, (cf estimation) aws est moins cher et offre des performances plus élevé.
 
