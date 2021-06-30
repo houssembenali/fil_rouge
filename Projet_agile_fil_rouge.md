@@ -103,6 +103,10 @@ La gestion du projet s'effectue avec Github
 
 Jenkins
 
+### Cloud 
+
+aws justifiez ce choix.
+
 ## Organisation de l'équipe 
 
 Nous avons convenu de travailler chacun sur toutes les parties. 
@@ -115,10 +119,15 @@ TODO mettre une capture ou un schema pour illustrer
 
 ## Organisation du dépôt git 
 
-Nous allons nous organiser par branch avec approbation de chacun des membres du groupe pour merger les élements sur le dépot GIT. 
+Nous allons nous organiser par branch avec approbation d'un des membres du groupe pour merger les élements sur le dépot GIT. 
 Chaque partie sera hiérarchisée et mis dans des dossiers spécifiques. 
 
 TODO mettre une capture ou un schema pour montrer l'organisation
 
 ## Organisation du cycle de vie
 
+reprendre le backlog pour exprimer le besoin metier (non technique)
+vision produit 
+besoin fonctionnel
+
+action attendu
