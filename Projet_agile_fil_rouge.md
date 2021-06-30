@@ -40,6 +40,8 @@ Cf fichier Archi technique
 
 https://app.moqups.com/N4kz3IgJ1G/view/page/a29d6f3c2
 
+<img src="https://github.com/houssembenali/fil_rouge/blob/main/Architecture-technique-file-rouge.png?raw=true"/>
+
 ## Définition du "Done"
 
 - Revue de code faite
@@ -131,3 +133,11 @@ vision produit
 besoin fonctionnel
 
 action attendu
+
+
+detail ne pas oublier les access key et secret
+
+
+comparaison entre Azure et aws
+pour la même prestation, (cf estimation) aws est moins cher et offre des performances plus élevé.
+
