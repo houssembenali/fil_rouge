@@ -1,6 +1,6 @@
 # Introduction 
 
-Ce document présente le projet file du groupe 4. 
+Ce document présente le projet file rouge du groupe 4. 
 Il a pour but de donner des détails sur l'ensemble de l'organisation, des tâches à effectuer, de la répartition des tâches etc...
 
 ---
