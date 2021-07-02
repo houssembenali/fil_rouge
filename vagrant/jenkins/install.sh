@@ -6,4 +6,6 @@ wget -O - https://gist.githubusercontent.com/houssembenali/b72d1403b102566fbfb5d
 echo "Installing Docker CE from provisioning"
 wget -O - https://gist.githubusercontent.com/houssembenali/6eeb306494ca66aa91a941f6a373fcd7/raw/d6af1424d66de03ad06c259cf9ebecbd50e63ad3/docker-installation.sh | bash
 
+sudo usermod -aG docker jenkins
+
 echo "End provisioning"
