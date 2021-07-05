@@ -8,4 +8,7 @@ Branches :
 Création des Branches :
 * US-[numero de l'US]-[nom de l'US]
 
+
+Une version SNAPSHOT chaque vendredi aprés midi
+
 Lien vers le [Diagramme de Classe](https://app.diagrams.net/#Hhoussembenali%2Ffil_rouge%2Fdiagramme-classe%2Fdiagramme%2FDiagramme_Classe_Fil_Rouge.drawio).
