@@ -5,7 +5,7 @@ WORKDIR /usr/src/
 COPY docker/webapp/src/* app/
 
 
-COPY docker/webapp/requirements.txt .
+COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
