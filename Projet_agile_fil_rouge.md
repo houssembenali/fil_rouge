@@ -141,3 +141,13 @@ detail ne pas oublier les access key et secret
 comparaison entre Azure et aws
 pour la même prestation, (cf estimation) aws est moins cher et offre des performances plus élevé.
 
+### Soumettre une pull request
+
+Le projet étant en gestion semi-automatique sur GitHub, un certain nombre d'actions doivent être exécutées lors de la soumission des pull requests.
+- Création de la pull request entre la branche à merger et la branche "dev". 
+- Ajout à la section "Linked Issues" de la User Story correspondant à la branche à merger. -> cette étape permettra de close automatiquement la User Story associée lors de la résolution de la pull request.
+- Ajout à la section "Project" du projet "Projet Fil Rouge".
+- Passage du statut de la pull request à "To Do" sur la section "Project". -> cette étape permet de faire apparaître l'issue correspondant à la pull request dans le tableau du sprint.
+- On signale que la pull request est disponible sur Teams, et une personne choisira de s'en occuper.
+- La personne qui prend la pull request va s'assigner en tant que reviewer sur cette même pull request.
+- La personne qui prend la pull request passe le statut de la pull request vis-à-vis du "Project" de "To Do" à "In Progress".
