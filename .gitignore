@@ -1,2 +1,6 @@
 vagrant/jenkins/.vagrant
 vagrant/jenkins/ubuntu-bionic-18.04-cloudimg-console.log
+vagrant/python/.vagrant
+vagrant/python/ubuntu-bionic-18.04-cloudimg-console.log
+vagrant/jenkins/project
+vagrant/python/project
