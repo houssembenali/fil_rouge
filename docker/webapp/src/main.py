@@ -1,23 +1,14 @@
 from flask import Flask, redirect, url_for, render_template
+from modules.projects.listprojet import getAllProject
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='modules')
 
 
 @app.route("/projects")
 def pageListProjets():
-    return render_template("list-projet.html", listProjet=getAllProject())
+    return render_template("projects/list-projet.html", listProjet=getAllProject())
 
 
-def getAllProject():
-    list_projets=[]
-
-    f = open("DB/projects.txt", "r")
-    Lines = f.readlines()
-    count = 0
-    for line in Lines:
-        count += 1
-        list_projets.append(line.split(";"))
-    return list_projets
 
 
 
