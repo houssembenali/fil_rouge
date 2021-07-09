@@ -1,0 +1,11 @@
+input:invalid {
+    border-color:#DD2C00;
+}
+input,
+input:valid {
+    border-color: #ccc;
+}
+
+.container {
+    background-color: red;
+}
