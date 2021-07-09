@@ -1,49 +1,34 @@
-from flask import Flask, jsonify
+from flask import Flask, redirect, request, url_for, render_template
 
-# Creating a new "app" by using the Flask constructor. Passes __name__ as a parameter.
-app = Flask(__name__)
+from modules.projects.listprojet import getAllProject
+from modeles import ParamBucket
+from modules.parametrage import crud
 
-games = [
-  {
-    "id": 0,
-    "name": "Scrabble",
-    "editor": "mattel",
-    "year_published": "1978",
-    "description": "descp",
-    "category": "family",
-    "time": "60min",
-    "number_player": "2-5"
-  },
-  {
-    "id": 1,
-    "name": "Aventuriers du rail",
-    "editor": "asmodee",
-    "year_published": "2006",
-    "description": "descp",
-    "category": "family",
-    "time": "45min",
-    "number_player": "2-5"
-  }
-]
+app = Flask(__name__, template_folder='modules')
 
-# Annotation that allows the function to be hit at the specific URL.
 @app.route("/")
-# Generic Python functino that returns "Hello world!"
-def index():
-    return "Hello world DevOps!"
+def hello_world():
+    return "Bienvenue sur l'application fil rouge"
 
-@app.route("/jeux")
-def listeJeux():
-    return jsonify({"games": games})
+@app.route('/parametrage-cloud', methods=["GET", "POST","PUT"])
+def create_bucket():
+    
+    if request.method == "POST":
+        data = request.form['namebucket']
+        #bucket = ParamBucket(data)
+        crud.create_bucket_name(data)
 
-@app.route("/jeux", methods=["POST"])
-# This function requires a parameter from the URL.
-def get_Addgame(object_game):
-    # Traitement ajout de donnée
-    pass
+    # if request.method == "PUT":
+    #     data = request.form['namebucket']
+    #     crud.update_bucket_by_name(data)
+
+    return render_template('parametrage/templates/parametrage.html')
 
 
-# Checks to see if the name of the package is the run as the main package.
+@app.route("/projects")
+def pageListProjets():
+    return render_template("projects/list-projet.html", listProjet=getAllProject())
+
+
 if __name__ == "__main__":
-    # Runs the Flask application only if the main.py file is being run.
-    app.run(host='0.0.0.0',port=3000)
+    app.run(debug=True)
