@@ -10,6 +10,6 @@ COPY docker/webapp/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 
-EXPOSE 3000
+EXPOSE 5000
 
 CMD [ "python", "./app/main.py" ]

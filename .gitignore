@@ -1,6 +1,9 @@
-vagrant/jenkins/.vagrant
-vagrant/jenkins/ubuntu-bionic-18.04-cloudimg-console.log
+.project
+.pydevproject
+**/__pycache__
 vagrant/python/.vagrant
 vagrant/python/ubuntu-bionic-18.04-cloudimg-console.log
-vagrant/jenkins/project
 vagrant/python/project
+vagrant/jenkins/project
+vagrant/jenkins/.vagrant
+vagrant/jenkins/ubuntu-bionic-18.04-cloudimg-console.log
