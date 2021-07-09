@@ -1,5 +1,5 @@
 {% extends "template/page.html" %}
-{% block title %} <h3>Liste des projets</h3> {% endblock %}
+{% block title %} Liste des projets {% endblock %}
 
 {% block content %}
 <h3>Liste des projets</h3>
@@ -17,8 +17,8 @@
 			    </div>
 			   <!--  <span class="badge bg-primary rounded-pill">14</span> -->
 			   <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-				  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">supprimer</button>
-				  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#publishModal">Publier</button>
+				  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">supprimer</button>
+				  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#publishModal">Publier</button>
 				</div>
 			  </li>
 
@@ -32,13 +32,13 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Suppression du projet</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         Voulez-vous supprimer le projet ?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
         <button type="button" class="btn btn-danger">Supprimer</button>
       </div>
     </div>
@@ -51,7 +51,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Publication du projet</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         Voulez-vous publier le projet ?
@@ -64,7 +64,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
         <button type="button" class="btn btn-success show-toast">publier</button>
       </div>
     </div>
