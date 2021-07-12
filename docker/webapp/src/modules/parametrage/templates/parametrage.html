@@ -3,27 +3,119 @@
 {% block content %}
 <br />
 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
-  integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+<!--<link src="/webapp/modules/parametrage/templates/css/param.css" rel="stylesheet" />
+<script src="/webapp/modules/parametrage/templates/js/param.js"> </script>-->
 
+<style>
+input:invalid {
+  border-color:#DD2C00;
+}
+
+input,
+input:valid {
+  border-color:#ccc;
+}
+</style>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <div class="container">
   <h2 class="text-center">Paramétrage stockage cloud</h2>
   <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-lg-6 pb-5">
-      <form action="" method="POST">
+      <form action="" onsubmit="alert('Thanks for crate bucket');" method="POST">
         <!--Body-->
-        <div class="form-group">
+        <div class="form-group" id="form">
+
+          <label>Le nom du bucket actuel actuel est : {{bucket_file}}</label>
+
+          <!--<div class="alert alert-success">
+            <strong>Success!</strong> Indicates a successful or positive action.
+          </div>-->
+
           <div class="input-group mb-2">
             <div class="input-group-prepend">
-              <div class="input-group-text"><i class="fa fa-user text-info"></i></div>
+              <div class="input-group-text"><i class="fab fa-bitbucket"></i></div>
             </div>
-            <input type="text" required class="form-control" id="namebucket" name="namebucket" placeholder="nom du bucket"
-              required>
+            <input required style="text-transform: lowercase;"
+              required class="form-control" 
+              name="namebucket" placeholder="nom du bucket"
+              id="namebucket"
+              minlength="3"
+              maxlength="63"
+              pattern="^[a-z0-9](?:_?[a-z0-9.-]+)*$"
+              oninput="
+              setCustomValidity('');
+              checkValidity();
+              if (validity.patternMismatch) {
+                  setCustomValidity('le nom du bucket doit être constitué que de lettres minuscules, de chiffres, de points (.) et de tirets (-).\n Et doit commencé et se terminé par une lettre ou un chiffre');
+              }
+              else if (validity.valueMissing) {
+                  setCustomValidity('Veuillez renseigner ce champ.');
+              }
+              else if (validity.valid) {
+                  setCustomValidity('');
+              }"
+              />
           </div>
-        </div>
 
+          <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js">
+            var input = document.getElementById('namebucket');
+            var form  = document.querySelector('form');
+
+            function myFunction() {
+              if (form.checkValidity()) {
+                  alert("Adding Succesful!");
+                }
+              }
+            
+            /*input.oninvalid = function (event) {
+             event.target.setCustomValidity('le nom du bucket doit comporté entre 3 et 63 caractères.\n Il doit être constitué que de lettres minuscules, de chiffres, de points (.) et de tirets (-).\n Et doit commencé et se terminé par une lettre ou un chiffre');
+            }
+            input.oninput = function (event){
+              event.target.setCustomValidity('');
+              checkValidity();
+              // console.log(validity);
+              if (validity.patternMismatch) {
+                  setCustomValidity('Please enter at least six characters.');
+              }
+              else if (validity.valueMissing) {
+                  setCustomValidity('This field is required.');
+              }
+              else if (validity.valid) {
+                  setCustomValidity('');
+              }
+            }*/
+    
+
+            
+            /*var elem               = document.createElement('div');
+                elem.id            = 'notify';
+                elem.style.display = 'none';
+                form.appendChild(elem);
+
+            input.addEventListener('invalid', function (event) {
+              event.preventDefault();
+              if (!event.target.validity.valid) {
+                elem.textContent = 'le nom du bucket doit comporté entre 3 et 63 caractères.\n Il doit être constitué que de lettres minuscules, de chiffres, de points (.) et de tirets (-).\n Et doit commencé et se terminé par une lettre ou un chiffre';
+                elem.className = 'error';
+                elem.style.display = 'block';
+
+                input.className = 'invalid animated shake';
+              }
+            });
+
+            input.addEventListener('input', function (event) {
+              if ('block' === elem.style.display) {
+                input.className = '';
+                elem.style.display = 'none';
+              }
+            });*/
+
+          </script>
+
+        </div>
         <div class="text-center">
-          <button type="submit" class="btn btn-primary btn-block rounded-0 py-2">Créer</button>
+          <button type="submit" class="btn btn-primary btn-block rounded-0 py-2">Enregistrer</button>
         </div>
       </div>
     </div>
