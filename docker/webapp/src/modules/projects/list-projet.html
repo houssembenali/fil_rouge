@@ -2,12 +2,22 @@
 {% block title %} Liste des projets {% endblock %}
 
 {% block content %}
+
+<div id="body" class="overflow-auto" >
+
 <h3>Liste des projets</h3>
+<br/>
+
+ 	{% if message|length != 0 %}
+		<div class="alert alert-success" role="alert">
+		  Le projet {{ message }} est ajouter avec succee.
+		</div>
+    {% endif %}
 <br/>
 
 
 
-<ol class="list-group list-group-numbered">
+<ol class="list-group list-group-numbered" >
 
 	{% 	for projet in listProjet %}
 			  <li class="list-group-item d-flex justify-content-between align-items-start">
@@ -74,7 +84,7 @@
 
 
   
-
+</div>
 
 
 
