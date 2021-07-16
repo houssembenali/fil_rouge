@@ -14,12 +14,11 @@
 <form action="http://localhost:5000/api/addrepo" method="POST">
   <div class="form-group" >
     <label for="exampleInputEmail1">Nom du réposytory</label>
-    <input type="text" class="form-control" id="name" name="name" placeholder="exemple : Projet covoiturage">
+    <input type="text" class="form-control" id="name" name="name" required placeholder="exemple : Projet covoiturage">
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Lien du répository</label>
-    <input type="text" class="form-control" id="link" name="link" 
-    pattern="/^([A-Za-z0-9]+@|http(|s)\:\/\/)([A-Za-z0-9.]+(:\d+)?)(?::|\/)([\d\/\w.-]+?)(\.git)?$/i" 
+    <input type="url" class="form-control" id="link" name="link" required
     placeholder="exemple repo priver : https://api_private_key:x-oauth-basic@github.com/user/repo.git">
 <!--         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
   </div>
