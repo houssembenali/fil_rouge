@@ -1,4 +1,5 @@
 .project
+.settings
 .pydevproject
 **/__pycache__
 vagrant/python/.vagrant
