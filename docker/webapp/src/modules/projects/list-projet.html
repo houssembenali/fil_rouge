@@ -8,10 +8,17 @@
 <h3>Liste des projets</h3>
 <br/>
 
- 	{% if message|length != 0 %}
-		<div class="alert alert-success" role="alert">
-		  Le projet {{ message }} est ajouter avec succee.
+    
+   	{% if error|length != 0 %}
+		<div class="alert alert-danger" role="alert">
+		  {{error}}
 		</div>
+	{% else %}
+		{% if message|length != 0 %}
+			<div class="alert alert-success" role="alert">
+			  Le projet {{ message }} est ajouter avec succee.
+			</div>
+    	{% endif %}
     {% endif %}
 <br/>
 

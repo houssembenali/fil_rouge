@@ -15,7 +15,11 @@ def pageListProjets():
     else:
         msg=""
     
-    return render_template("projects/list-projet.html", message=msg, current="list",listProjet=getAllProject())
+    if 'error' in request.args:
+        errorMsg=request.args.get("error")
+    else:
+        errorMsg=""
+    return render_template("projects/list-projet.html", message=msg,error=errorMsg, current="list",listProjet=getAllProject())
 
 
 @app.route("/addproject")
@@ -26,8 +30,9 @@ def pageAddProjet():
 
 @app.route('/api/addrepo', methods=['POST'])
 def addRepo():
-    addProject(request.form)
-    return redirect(url_for(".pageListProjets" , current="list", message = request.form['name'],listProjet=getAllProject()))
+    errorMsg = ""
+    errorMsg=addProject(request.form)
+    return redirect(url_for(".pageListProjets" , current="list", message = request.form['name'],error=errorMsg,listProjet=getAllProject()))
 
 if __name__ == "__main__":
     app.run(debug=True)
