@@ -1,8 +1,6 @@
 import os
 
-THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-FILE_PATH = "DB/param-file.txt" #os.path.join(THIS_FOLDER, 'param-file.txt')
-
+FILE_PATH = "DB/param-file.txt"
 
 
 def read_bd():
@@ -15,6 +13,7 @@ def read_bd():
             return read_file.readlines()
     else:
         print("Either the file is missing or not readable")
+    return "default"
 
         
 def write_bd(data):
