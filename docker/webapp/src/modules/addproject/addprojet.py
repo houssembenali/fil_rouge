@@ -1,5 +1,9 @@
 import csv
 import constants as cs
+import git
+import shutil
+import stat
+import os
 
 def addProject(resultat):
     nom = resultat['name']
@@ -7,15 +11,34 @@ def addProject(resultat):
     error = ""
     if not isNameExist(nom):
         if not isUrlExist(link):
-            id = getNewId()
-            with open(cs.PROJECT_FILE_PATH, mode='a',newline='') as projects_file:
-                projects_writer = csv.writer(projects_file, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                projects_writer.writerow([id,nom,link])
+            if isUrlExistInNet(link):
+                id = getNewId()
+                with open(cs.PROJECT_FILE_PATH, mode='a',newline='') as projects_file:
+                    projects_writer = csv.writer(projects_file, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                    projects_writer.writerow([id,nom,link])
+            else:
+                error = "L'URL Git du projet "+ nom + " n'est pas accecible. Projet non ajouter, merci de verifier votre lien SVP"
         else:
             error = "L'URL Git du projet "+ nom + " existe deja. Projet non ajouter"
     else:
         error = 'Le nom '+ nom + ' existe deja. Projet non ajouter'
     return error
+    
+
+def isUrlExistInNet(link):
+    exist =True
+    try:
+    #filelist = [ f for f in os.listdir("temp/clone") ]
+       for f in os.listdir("temp/clone"):
+          shutil.rmtree(os.path.abspath("temp/clone/"+f))
+    
+    #shutil.rmtree("temp/clone")
+       git.Git("temp/clone").clone(link)    
+    
+    except git.exc.GitError:
+        print("ERROR! "+ link +" does not exist")
+        exist = False
+    return exist
     
     
 def isNameExist(name):
