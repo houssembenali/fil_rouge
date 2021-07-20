@@ -6,6 +6,7 @@ import stat
 import os
 
 def addProject(resultat):
+    checkTempDir(cs.TMP_CLONE_PATH)
     nom = resultat['name']
     link = resultat['link']
     error = ""
@@ -24,23 +25,21 @@ def addProject(resultat):
         error = 'Le nom '+ nom + ' existe deja. Projet non ajouter'
     return error
     
-
+# Verification de l'existance de l'URL dans internet (github, gitlab, ...)
 def isUrlExistInNet(link):
     exist =True
     try:
-    #filelist = [ f for f in os.listdir("temp/clone") ]
-       for f in os.listdir("temp/clone"):
-          shutil.rmtree(os.path.abspath("temp/clone/"+f))
-    
-    #shutil.rmtree("temp/clone")
-       git.Git("temp/clone").clone(link)    
-    
+       for f in os.listdir(cs.TMP_CLONE_PATH):
+        if os.path.isdir(cs.TMP_CLONE_PATH+f):   
+           shutil.rmtree(os.path.abspath(cs.TMP_CLONE_PATH+f))
+       git.Git(cs.TMP_CLONE_PATH).clone(link)    
     except git.exc.GitError:
         print("ERROR! "+ link +" does not exist")
         exist = False
     return exist
     
-    
+
+# Verifier si le nom existe deja dans notre base de donnee
 def isNameExist(name):
     exist = False
     with open(cs.PROJECT_FILE_PATH) as csv_file:
@@ -50,6 +49,7 @@ def isNameExist(name):
                exist=True
     return exist
 
+# Verifier si l'URL existe deja dans notre base de donnee
 def isUrlExist(name):
     exist = False
     with open(cs.PROJECT_FILE_PATH) as csv_file:
@@ -59,6 +59,7 @@ def isUrlExist(name):
                exist=True
     return exist
 
+# Recuperer le dernier ID utiliser dans la liste des projet
 def getNewId():
     max = 1
     with open(cs.PROJECT_FILE_PATH) as csv_file:
@@ -68,3 +69,10 @@ def getNewId():
                max=int(list({row[0]})[0])
     max=max+1
     return max
+
+# Creation du repertoir s'il n'existe pas
+def checkTempDir(dirName):
+    try:
+        os.makedirs(dirName)    
+    except FileExistsError:
+        print("Directory " , dirName ,  " already exists")
