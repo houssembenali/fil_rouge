@@ -45,7 +45,7 @@ def create_bucket():
        data = request.form['namebucket']
        crud.create_bucket_name(data)
 
-    return render_template('parametrage/templates/parametrage.html', bucket_file=crud.get_bucket_name())
+    return render_template('parametrage/templates/parametrage.html', bucket_file=crud.get_bucket_name(), current="param")
 
 if __name__ == "__main__":
     app.run(debug=True)
