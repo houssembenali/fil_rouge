@@ -21,13 +21,23 @@
 	      <div class="navbar-nav">
 	        <a class="nav-link 	{% if current== 'list' %}  active {% endif %} " aria-current="page" href="projects">Liste des projets</a>
 	        <a class="nav-link  {% if current== 'add' %}   active {% endif %} " href="addproject">Ajout projet</a>
-	        <a class="nav-link  {% if current== 'param' %} active {% endif %} " href="#">Paramétrage</a>
+	        <a class="nav-link  {% if current== 'param' %} active {% endif %} " href="parametrage-cloud">Paramétrage</a>
 	      </div>
 	    </div>
 	    <button type="button" class="btn btn-danger">Déconnexion</button>
 	  </div>
 	</nav>
 
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js">
+		$(function() {
+			var href = window.location.href;
+			$('nav a').each(function(e,i) {
+				if (href.indexOf($(this).attr('href')) >= 0) {
+				$(this).addClass('active');
+				}
+			});
+		});
+	</script>
 
 	<br/>
 

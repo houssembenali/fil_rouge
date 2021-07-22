@@ -1,0 +1,94 @@
+{% extends "template/page.html" %}
+
+{% block content %}
+<br />
+
+<style>
+input:invalid {
+  border-color:#DD2C00;
+}
+
+input,
+input:valid {
+  border-color:#ccc;
+}
+
+.bs-example{
+  margin: 20px;
+  position: relative;
+}
+</style>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+<div class="container">
+  <h2 class="text-center">Paramétrage stockage cloud</h2>
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6 pb-5">
+
+     <ul class="list-group">
+        <label>Les règles suivantes s'appliquent pour nommer les compartiments dans Amazon S3 :
+        <li class="list-group-item">Les noms de buckets doivent comporter entre 3 et 63 caractères.</li>
+        <li class="list-group-item">Les noms de compartiment ne peuvent être constitués que de lettres minuscules, de chiffres, de points (.) et de tirets (-).</li>
+        <li class="list-group-item">Les noms de buckets doivent commencer et se terminer par une lettre ou un chiffre.</li>
+      </ul>
+
+      {% if bucket_file|length != 0 %}
+      <div id="success-alert" class="alert alert-success d-flex align-items-center" role="alert" aria-label="close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Success:">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </svg>
+        <div id="success-alert">
+          Succès Création du Bucket {{ bucket_file }}
+        </div>
+      </div>
+      {% endif %}
+          
+      <form action="" method="POST">
+        <!--Body-->
+        <div class="form-group" id="form">
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fab fa-bitbucket"></i></div>
+            </div>
+            <input required style="text-transform: lowercase;"
+              required class="form-control" 
+              name="namebucket" placeholder="nom du bucket"
+              id="namebucket"
+              minlength="3"
+              maxlength="63"
+              pattern="^[a-z0-9](?:_?[a-z0-9.-]+)[a-z0-9]$"
+              oninput="
+              setCustomValidity('');
+              checkValidity();
+              if (validity.patternMismatch) {
+                  setCustomValidity('le nom du bucket doit être constitué que de lettres minuscules, de chiffres, de points (.) et de tirets (-).\n Et doit commencé et se terminé par une lettre ou un chiffre');
+              }
+              else if (validity.valueMissing) {
+                  setCustomValidity('Veuillez renseigner ce champ.');
+              }
+              else if (validity.valid) {
+                  setCustomValidity('');
+              }"
+              value="{{bucket_file}}"
+              />
+          </div>
+          
+          <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js">
+
+            var input = document.getElementById('namebucket');
+            var form  = document.querySelector('form');
+
+          </script>
+
+        </div>
+        <div class="text-center">
+          <button type="submit" id="myWish" class="btn btn-primary btn-block rounded-0 py-2" >Enregistrer</button>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</div>
+
+
+{% endblock %}

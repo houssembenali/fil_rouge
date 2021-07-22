@@ -1,9 +1,11 @@
-from flask import Flask, redirect, url_for, render_template,request
+from flask import Flask, redirect, request, url_for, render_template
 from modules.projects.listprojet import getAllProject
 from modules.addproject.addprojet import addProject
 import constants as cs
 import csv
 from _ast import If
+
+from modules.parametrage import crud
 
 app = Flask(__name__, template_folder='modules')
 
@@ -27,12 +29,23 @@ def pageAddProjet():
     return render_template("addproject/add-projet.html",current="add")
 
 
-
 @app.route('/api/addrepo', methods=['POST'])
 def addRepo():
     errorMsg = ""
     errorMsg=addProject(request.form)
     return redirect(url_for(".pageListProjets" , current="list", message = request.form['name'],error=errorMsg,listProjet=getAllProject()))
+
+@app.route('/parametrage-cloud', methods=["GET", "POST","PUT"])
+def create_bucket():
+    """
+        Methode permettant la création du bucket
+    :return:
+    """
+    if request.method == "POST":
+       data = request.form['namebucket']
+       crud.create_bucket_name(data)
+
+    return render_template('parametrage/templates/parametrage.html', bucket_file=crud.get_bucket_name(), current="param")
 
 if __name__ == "__main__":
     app.run(debug=True)
