@@ -18,8 +18,8 @@ def create_bucket():
     :return:
     """
     if request.method == "POST":
-        data = request.form['namebucket']
-        crud.create_bucket_name(data)
+       data = request.form['namebucket']
+       crud.create_bucket_name(data)
 
     return render_template('parametrage/templates/parametrage.html', bucket_file=crud.get_bucket_name())
 

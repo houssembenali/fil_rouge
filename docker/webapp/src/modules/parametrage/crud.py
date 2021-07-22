@@ -17,5 +17,4 @@ def get_bucket_name():
     for bucket in bdd_file.read_bd():
         if bucket is not None:
             return bucket
-            print(bucket)  
     return ""

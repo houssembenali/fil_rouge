@@ -13,7 +13,7 @@ def read_bd():
             return read_file.readlines()
     else:
         print("Either the file is missing or not readable")
-    return "default"
+    return ""
 
         
 def write_bd(data):
