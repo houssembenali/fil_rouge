@@ -13,18 +13,18 @@
 	<!-- BARRE DE NAVGATION -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container-fluid">
-	    <a class="navbar-brand" href="#">GitHoster</a>
+	    <a class="navbar-brand" href="projects">GitHoster</a>
 	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 	      <span class="navbar-toggler-icon"></span>
 	    </button>
 	    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 	      <div class="navbar-nav">
-	        <a class="nav-link active" aria-current="page" href="{{ url_for('pageListProjets') }}">Liste des projets</a>
-	        <a class="nav-link" href="#">Ajout projet</a>
-	        <a class="nav-link" href="{{ url_for('create_bucket') }}">paramétrage</a>
+	        <a class="nav-link 	{% if current== 'list' %}  active {% endif %} " aria-current="page" href="projects">Liste des projets</a>
+	        <a class="nav-link  {% if current== 'add' %}   active {% endif %} " href="addproject">Ajout projet</a>
+	        <a class="nav-link  {% if current== 'param' %} active {% endif %} " href="parametrage-cloud">Paramétrage</a>
 	      </div>
 	    </div>
-	    <button type="button" class="btn btn-danger">Déconnection</button>
+	    <button type="button" class="btn btn-danger">Déconnexion</button>
 	  </div>
 	</nav>
 
@@ -50,7 +50,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 <!-- FOOTER -->
 
-<footer class="bg-light text-center text-lg-start" id="footer">
+<footer class="bg-light text-center text-lg-start" id="footer" style="margin-top: 40px;">
   <div class="container p-4">
     <div class="row">
       <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
@@ -73,11 +73,19 @@
 
 
 <style type="text/css">
-  #footer {
-    position : absolute;
-    bottom : 0;
-    width: 100%;
-  }
+html {
+      position: relative;
+      min-height: 100%;
+}
+
+.footer {
+         position: absolute;
+         bottom: 0; 
+         width: 100%;
+         height: 40px; /* Set the fixed height of the footer here */
+         line-height: 0.5; /* aligns type in footer-container */
+         background-color: #f5f5f5;
+}
 </style>
 
 </body>
