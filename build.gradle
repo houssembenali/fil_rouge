@@ -22,7 +22,7 @@ task dep(type:Exec, dependsOn: purge) {
 def tarfile = "project-" + version
 task packageDistribution(type: Zip, dependsOn: dep) {
     from ('docker/webapp') { into 'app' }
-    from ('doc') { into 'doc' }
+    //from ('doc') { into 'doc' }
     archiveFileName = tarfile + ".zip"
     destinationDirectory = file("build")
 }

@@ -4,7 +4,7 @@ pipeline {
       stages {
         stage('Clone sources') {
             steps {
-                git branch: 'main', url : 'https://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:x-oauth-basic@github.com/houssembenali/fil_rouge.git'
+                git branch: 'US-9-livraison-application', url : 'https://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:x-oauth-basic@github.com/houssembenali/fil_rouge.git'
             }
         }
         
