@@ -20,5 +20,5 @@ def write_bd(data):
     :param data: list data qu'on va mettre dans notre fichier
     :return:
     """
-    with open(cd.FILE_PATH, "w", encoding="utf-8") as read_file:
+    with open(cs.FILE_PATH, "w", encoding="utf-8") as read_file:
         read_file.write(str(data))
