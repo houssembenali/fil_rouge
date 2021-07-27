@@ -6,19 +6,19 @@ Le menu est composé de trois partie, le logo de l’application, le différente
 
 Comme page l’utilisateur a la possibilité de basculer entre les trois rebrique disponible :
 
-·    Liste des projets : permet d’afficher la liste des projets ajouter et de les gérer.
+* Liste des projets : permet d’afficher la liste des projets ajouter et de les gérer.
 
-·    Ajout de projet : permet l’ajout d’un nouveau projet par l’administrateur
+* Ajout de projet : permet l’ajout d’un nouveau projet par l’administrateur
 
-·    Paramétrage : permet le paramétrage de notre application
+* Paramétrage : permet le paramétrage de notre application
 
 L’administrateur peux aussi naviguer directement avec le lien hyper texte suivant : 
 
-·    Liste des projets :      http://WWW.XXX.YYY.ZZZZ:PPPP/projects ou [http://WWW.XXX.YYY.ZZZZ:PPPP/](http://WWW.XXX.YYY.ZZZZ:PPPP/projects)
+* Liste des projets :      http://WWW.XXX.YYY.ZZZZ:PPPP/projects ou [http://WWW.XXX.YYY.ZZZZ:PPPP/](http://WWW.XXX.YYY.ZZZZ:PPPP/projects)
 
-·    Ajout de projet :        http://WWW.XXX.YYY.ZZZZ:PPPP/addproject
+* Ajout de projet :        http://WWW.XXX.YYY.ZZZZ:PPPP/addproject
 
-·    Paramétrage de l’app : http://WWW.XXX.YYY.ZZZZ:PPPP/param
+* Paramétrage de l’app : http://WWW.XXX.YYY.ZZZZ:PPPP/param
 
 Le logo est cliquable, ce dernier nous redirige vers la page d’accueil « Liste des projets » 
 
@@ -38,11 +38,11 @@ Le nom du projet doit être composée uniquement de chiffre, de lettre, d’espa
 
 Le champ « URL du projet Git » et soumis à plusieurs contrôles :
 
-·    Contrôle de format des liens des dépôt Git
+* Contrôle de format des liens des dépôt Git
 
-·    Teste de redondance
+* Teste de redondance
 
-·    Test d’existence du dépôt git (si ce dernier est inaccessible il sera rejeté)
+* Test d’existence du dépôt git (si ce dernier est inaccessible il sera rejeté)
 
 Pour les dépôts privé la clé secrète API générer du projet sera intégrer directement dans le lien GIT comme l’exemple ci-dessous.
 
@@ -72,6 +72,17 @@ Cette page permet nous permet de supprimer ou publier un projet.
 
 Figure 3 Page d'accueil (liste des projets)
 
+
+# Page Pamétrage Cloud
+
+La page paramétrage cloud permet de définir le nom du bucket via l'IHM en respectant les critères définis par aws à savoir :
+
+* Les noms de buckets doivent comporter entre 3 et 63 caractères.
+
+* Les noms de compartiment ne peuvent être constitués que de lettres minuscules, de chiffres, de points (.) et de tirets (-).
+
+* Les noms de buckets doivent commencer et se terminer par une lettre ou un chiffre.
  
+![img](img/param-bucket.PNG)
 
  
