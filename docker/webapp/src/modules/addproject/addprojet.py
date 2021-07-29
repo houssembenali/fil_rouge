@@ -34,9 +34,9 @@ def insertProject(id,nom,link):
 def isUrlExistInNet(link):
     exist =True
     try:
-       #for f in os.listdir(cs.TMP_CLONE_PATH):
-        #if os.path.isdir(cs.TMP_CLONE_PATH+f):   
-        #   shutil.rmtree(os.path.abspath(cs.TMP_CLONE_PATH+f))
+       for f in os.listdir(cs.TMP_CLONE_PATH):
+        if os.path.isdir(cs.TMP_CLONE_PATH+f):   
+           shutil.rmtree(os.path.abspath(cs.TMP_CLONE_PATH+f))
        git.Git(cs.TMP_CLONE_PATH).clone(link)    
     except git.exc.GitError:
         print("ERROR! "+ link +" does not exist")
