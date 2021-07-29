@@ -1,11 +1,13 @@
 from flask import Flask, redirect, request, url_for, render_template
-from modules.projects.listprojet import getAllProject
-from modules.addproject.addprojet import addProject
 import constants as cs
 import csv
 from _ast import If
-
+from modules.projects.listprojet import getAllProject
+from modules.projects.crud import delete
+from modules.addproject.addprojet import addProject
 from modules.parametrage import crud
+
+
 
 app = Flask(__name__, template_folder='modules')
 
@@ -33,7 +35,17 @@ def pageAddProjet():
 def addRepo():
     errorMsg = ""
     errorMsg=addProject(request.form)
-    return redirect(url_for(".pageListProjets" , current="list", message = request.form['name'],error=errorMsg,listProjet=getAllProject()))
+    msg= "Le projet «" + request.form['name'] + "» est ajouter avec succee."
+    return redirect(url_for(".pageListProjets" , current="list", message = msg,error=errorMsg,listProjet=getAllProject()))
+
+@app.route('/api/delrepo', methods=['POST'])
+def deleteRepo():
+    errorMsg = ""
+    #errorMsg=addProject(request.form)
+    delete(request.form["id"])
+    msg = "Le projet «" + request.form['name'] + "» est supprimer avec succee."
+    return redirect(url_for(".pageListProjets" , current="list", message = msg,error=errorMsg,listProjet=getAllProject()))
+
 
 @app.route('/parametrage-cloud', methods=["GET", "POST","PUT"])
 def create_bucket():

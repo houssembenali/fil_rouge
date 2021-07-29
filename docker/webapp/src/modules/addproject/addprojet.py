@@ -14,9 +14,7 @@ def addProject(resultat):
         if not isUrlExist(link):
             if isUrlExistInNet(link):
                 id = getNewId()
-                with open(cs.PROJECT_FILE_PATH, mode='a',newline='') as projects_file:
-                    projects_writer = csv.writer(projects_file, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                    projects_writer.writerow([id,nom,link])
+                insertProject(id,nom,link)
             else:
                 error = "L'URL Git du projet "+ nom + " n'est pas accecible. Projet non ajouter, merci de verifier votre lien SVP"
         else:
@@ -24,14 +22,21 @@ def addProject(resultat):
     else:
         error = 'Le nom '+ nom + ' existe deja. Projet non ajouter'
     return error
+
+
+
+def insertProject(id,nom,link):
+    with open(cs.PROJECT_FILE_PATH, mode='a',newline='') as projects_file:
+                    projects_writer = csv.writer(projects_file, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                    projects_writer.writerow([id,nom,link])
     
 # Verification de l'existance de l'URL dans internet (github, gitlab, ...)
 def isUrlExistInNet(link):
     exist =True
     try:
-       for f in os.listdir(cs.TMP_CLONE_PATH):
-        if os.path.isdir(cs.TMP_CLONE_PATH+f):   
-           shutil.rmtree(os.path.abspath(cs.TMP_CLONE_PATH+f))
+       #for f in os.listdir(cs.TMP_CLONE_PATH):
+        #if os.path.isdir(cs.TMP_CLONE_PATH+f):   
+        #   shutil.rmtree(os.path.abspath(cs.TMP_CLONE_PATH+f))
        git.Git(cs.TMP_CLONE_PATH).clone(link)    
     except git.exc.GitError:
         print("ERROR! "+ link +" does not exist")
