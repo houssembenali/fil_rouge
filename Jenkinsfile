@@ -4,15 +4,13 @@ pipeline {
       stages {
         stage('Clone sources') {
             steps {
-                git branch: 'US-9-livraison-application', url : 'https://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:x-oauth-basic@github.com/houssembenali/fil_rouge.git'
+                git branch: 'main', url : 'https://github.com/houssembenali/fil_rouge'
             }
         }
         
         stage('Package and deliver') {
-             tools {
-               gradle 'installGradle'
-             }
             steps {
+                sh 'gradle --version'
                 sh 'gradle up'
             }
         }
