@@ -11,6 +11,10 @@ from modules.parametrage import crud
 
 app = Flask(__name__, template_folder='modules')
 
+@app.route("/")
+def index():
+    return pageListProjets()
+
 
 @app.route("/projects")
 def pageListProjets():
