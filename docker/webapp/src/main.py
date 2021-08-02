@@ -10,6 +10,16 @@ from modules.parametrage import crud
 app = Flask(__name__, template_folder='modules')
 
 
+@app.route("/webhook", methods=["POST"])
+def pageListProjets():
+    print (request.data)
+    jsondata = json.loads(request.data)
+    print ("full_name: {}".format(jsondata['repository']['full_name']))
+    print ("html_url: {}.git".format(jsondata['repository']['html_url']))
+    print ("New commit by: {}".format(jsondata['commits'][0]['author']['name']))
+    return (request.data)
+
+
 @app.route("/projects")
 def pageListProjets():
     if 'message' in request.args:
