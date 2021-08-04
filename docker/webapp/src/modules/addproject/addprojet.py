@@ -5,6 +5,7 @@ import shutil
 import stat
 import os
 
+# Méthode principal de vérification et insértion de projet
 def addProject(resultat):
     checkTempDir(cs.TMP_CLONE_PATH)
     nom = resultat['name']
@@ -27,8 +28,8 @@ def addProject(resultat):
 
 def insertProject(id,nom,link):
     with open(cs.PROJECT_FILE_PATH, mode='a',newline='') as projects_file:
-                    projects_writer = csv.writer(projects_file, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                    projects_writer.writerow([id,nom,link])
+        projects_writer = csv.writer(projects_file, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        projects_writer.writerow([id,nom,link])
     
 # Verification de l'existance de l'URL dans internet (github, gitlab, ...)
 def isUrlExistInNet(link):

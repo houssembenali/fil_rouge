@@ -2,6 +2,7 @@
 {% block title %} Liste des projets {% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
 <div id="body" class="overflow-auto" >
 
@@ -35,8 +36,8 @@
 			    </div>
 			   <!--  <span class="badge bg-primary rounded-pill">14</span> -->
 			   <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-				  <button type="button" class="btn btn-danger" data-toggle="modal" data-name="{{projet[1]}}" data-id="{{projet[0]}}" data-target="#deleteModal">supprimer</button>
-				  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#publishModal">Publier</button>
+				  <button type="button" class="btn btn-danger" data-toggle="modal" data-name="{{projet[1]}}" data-id="{{projet[0]}}" data-target="#deleteModal"><i class="fa fa-trash" aria-hidden="true"></i> supprimer</button>
+				  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#publishModal"><i class="fa fa-upload" aria-hidden="true"></i> Publier</button>
 				</div>
 			  </li>
 
