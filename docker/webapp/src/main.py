@@ -45,7 +45,6 @@ def addRepo():
 @app.route('/api/delrepo', methods=['POST'])
 def deleteRepo():
     errorMsg = ""
-    #errorMsg=addProject(request.form)
     errorMsg=deleteFromFileById(request.form["id"],cs.PROJECT_FILE_PATH)
     msg = "Le projet «" + request.form['name'] + "» est supprimé avec succès."
     return redirect(url_for(".pageListProjets" , current="list", message = msg,error=errorMsg,listProjet=getAllProject()))
