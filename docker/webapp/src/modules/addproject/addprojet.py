@@ -25,7 +25,7 @@ def addProject(resultat):
     return error
 
 
-
+# ajouter un nouveau projet dans le fichier a partir des détails du projet
 def insertProject(id,nom,link):
     with open(cs.PROJECT_FILE_PATH, mode='a',newline='') as projects_file:
         projects_writer = csv.writer(projects_file, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
