@@ -1,19 +1,13 @@
-echo "Start provisioning"
-
-echo "Installing Jenkins from provisioning"
-wget -O - https://gist.githubusercontent.com/houssembenali/b72d1403b102566fbfb5d38caf6d9cef/raw/d42b836cafcb8cb1d3d666eb2d9a2fc6a4f6cb23/jenkins-installation.sh | bash
-
-echo "Installing Docker CE from provisioning"
-wget -O - https://gist.githubusercontent.com/houssembenali/6eeb306494ca66aa91a941f6a373fcd7/raw/d6af1424d66de03ad06c259cf9ebecbd50e63ad3/docker-installation.sh | bash
-
-sudo usermod -aG docker jenkins
-
-echo "End provisioning"
-
 #!/usr/bin/env bash
+
+
+## CONSTANTS
 
 # Constants listing packages and modules to have installed at the end of the environment set up.
 PACKAGES_LIST="python3 python3-dev python3-pip git default-jdk apt-transport-https ca-certificates curl software-properties-common unzip"
+
+
+## METHODS
 
 # Check if a package is already installed on the machine, if not then install it.
 ij_check_install_package() {
@@ -65,6 +59,7 @@ ij_link_pip_to_pip3() {
     fi
 }
 
+# Get Jenkins package, then install it.
 ij_install_jenkins() {
     # Download Jenkins package. 
     # You can go to https://pkg.jenkins.io/debian/ to see the available commands
@@ -77,6 +72,7 @@ ij_install_jenkins() {
     ij_check_install_package 'jenkins'
 }
 
+# Manage to start JEnkins service and to make sure it will be relaunched every time at boot.
 ij_launch_jenkins() {
     # Start the Jenkins server
     systemctl start jenkins
@@ -84,7 +80,7 @@ ij_launch_jenkins() {
     systemctl enable jenkins
 }
 
-
+# Get Docker and install it. Docker will be used for creating and publishing the image to DockerHub, and to run it for testing purposes.
 ij_install_docker() {
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
     apt-key fingerprint 0EBFCD88
@@ -96,12 +92,14 @@ ij_install_docker() {
     ij_check_install_package 'docker_ce'
 }
 
+# Allow docker to be used by the user without using "sudo".
 ij_enable_docker_for_jenkins_user() {
     groupaad docker 
     usermod -aG docker $USER
     systemctl enable docker
 }
 
+# Get and install Gradle manually. Gradle is used in the build process, called by the Jenkinsfile.
 ij_install_gradle() {
     wget https://services.gradle.org/distributions/gradle-7.0-bin.zip -P /tmp
     unzip -d /opt/gradle /tmp/gradle-*.zip
@@ -117,6 +115,14 @@ ij_install_gradle() {
     rm -f /tmp/gradle-*.zip
 }
 
+# PRint the initial admn password in the logs of the vagrant up command. When retrieved can be used with ease by the admin to perform first configuration of the server.
+ij_get_jenkins_admin_password() {
+    cat /var/lib/jenkins/secrets/initialAdminPassword
+}
+
+
+## MAIN PROCESS
+
 apt-get update
 # Install all needed packages, for python and git.
 ij_install_packages $PACKAGES_LIST
@@ -126,11 +132,13 @@ ij_link_python_to_python3
 ij_link_pip_to_pip3
 # Install Jenkins
 ij_install_jenkins
-# Start Jenkins server enable it to be launched again on boot
+# Start Jenkins server enable it to be launched again on boot.
 ij_launch_jenkins
-# Install Docker
+# Install Docker.
 ij_install_docker
-# Make Docker use from Jenkins
+# Make Docker use from Jenkins.
 ij_enable_docker_for_jenkins_user
-# Install gradle with a recent version
+# Install gradle with a recent version.
 ij_install_gradle
+# Display the initial admin password in the logs of the vagrant up to allow the admin to configure it.
+ij_get_jenkins_admin_password
