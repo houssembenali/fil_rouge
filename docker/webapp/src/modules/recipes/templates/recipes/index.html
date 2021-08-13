@@ -1,0 +1,14 @@
+{% extends "page.html" %}
+
+{% set title = 'Homepage' %}
+
+{% block content %}
+    <br>
+    <h3>Cette application en Python permet de générer des sites HTML à partir de fichier markdown!</h3>
+    <br>
+    <p><em>Need an account? </em><a href="{{ url_for('users.register') }}">Register!</a></p>
+    {% if current_user.is_authenticated %}
+    {% else %}
+        <p><em>Existing user? </em><a href="{{ url_for('users.login') }}">Login!</a></p>
+    {% endif %}
+{% endblock %}
