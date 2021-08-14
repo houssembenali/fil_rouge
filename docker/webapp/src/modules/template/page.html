@@ -90,6 +90,7 @@ html {
 
 
 <script>
+// Jquerry Suppression
 $('#deleteModal').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget) // Button that triggered the modal
   var name = button.data('name')
@@ -99,6 +100,22 @@ $('#deleteModal').on('show.bs.modal', function (event) {
   modal.find('#name').val(name)
   modal.find('#id').val(id)
 })
+
+// Jquerry Publication
+$('#publishModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var name = button.data('name')
+  var id = button.data('id')
+  var link = button.data('link')
+  var modal = $(this)
+  modal.find('.modal-title').text('Suppression du projet ' +name)
+  modal.find('#name').val(name)
+  modal.find('#id').val(id)
+  modal.find('#link').val(link)
+})
+
+
+
 </script>
 
 </body>
