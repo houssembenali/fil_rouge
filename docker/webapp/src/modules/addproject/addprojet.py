@@ -18,11 +18,11 @@ def addProject(resultat):
                     projects_writer = csv.writer(projects_file, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                     projects_writer.writerow([id,nom,link])
             else:
-                error = "L'URL Git du projet "+ nom + " n'est pas accecible. Projet non ajouter, merci de verifier votre lien SVP"
+                error = "L'URL Git du projet "+ nom + " n'est pas accessible. Projet non ajouté, merci de verifier votre lien SVP"
         else:
-            error = "L'URL Git du projet "+ nom + " existe deja. Projet non ajouter"
+            error = "L'URL Git du projet "+ nom + " existe deja. Projet non ajouté"
     else:
-        error = 'Le nom '+ nom + ' existe deja. Projet non ajouter'
+        error = 'Le nom '+ nom + ' existe deja. Projet non ajouté'
     return error
     
 # Verification de l'existance de l'URL dans internet (github, gitlab, ...)
