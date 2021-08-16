@@ -1,0 +1,35 @@
+def majVersion = majorVersion ?: "1"
+def minVersion = minorVersion ?: "1"
+def baseBuildVersion = "0"
+
+def buildVersion = buildNumber ?: baseBuildVersion
+
+version = majVersion + "." + minVersion + "." + buildVersion 
+
+task purge(type:Delete) {
+  println 'Cleaning up former build files'
+  delete 'build/*.zip'
+}
+
+task dep(type:Exec, dependsOn: purge) {
+  println 'Installing dependencies'
+    executable 'sh'
+    args '-c', 'pip3 install -r requirements.txt'
+    standardOutput = new ByteArrayOutputStream()
+    ext.output = { return standardOutput.toString() }
+}
+
+def tarfile = "project-" + version
+task packageDistribution(type: Zip, dependsOn: dep) {
+    from ('docker/webapp') { into 'app' }
+    from ('doc') { into 'doc' }
+    archiveFileName = tarfile + ".zip"
+    destinationDirectory = file("build")
+}
+
+task up(type:Exec, dependsOn: packageDistribution) {
+  executable 'sh'
+  args '-c', 'curl -v --user "'+nexusUsername+':'+nexusPassword+'" --upload-file build/project-'+version+'.zip http://'+nexusRepo+':'+nexusPort+'/repository/projet-fil-rouge/'+version+'/project-'+version+'.zip'
+  standardOutput = new ByteArrayOutputStream()
+  ext.output = { return standardOutput.toString() }
+}

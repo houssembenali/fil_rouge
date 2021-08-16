@@ -1,22 +1,15 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+    config.vm.box = "ubuntu/bionic64"
+    config.vm.provision "shell", path: "install.sh"
 
-VAGRANTFILE_API_VERSION = "2"
+    config.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--audio", "none"] # desactiver carte son. cause bloquage dans le provisioning.
+      vb.memory = 4048
+      vb.cpus = 4
+      vb.name = "filrouge-vm-nexus"
+    end
 
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-config.vm.box = "bento/ubuntu-20.10"
-  
-	# Provision
-	config.vm.provision :shell, :path => "install.sh"
-
-	# To access a website running on port 8086 from the host, we can open a web browser  
-	# and go to http://192.168.0.101:8086
-	config.vm.network :forwarded_port, guest: 8086, host: 8086
-
-	# vNIC
-	config.vm.network "public_network", ip: "192.168.20.12"
-
-	# Shared folder
-	config.vm.synced_folder "vagrant/", "/home/vagrant", create: true
-
+  config.vm.network "private_network", ip: "192.168.20.12"
+  #config.vm.network "public_network"
+  config.vm.synced_folder "project/", "/home/project", create: true
 end
