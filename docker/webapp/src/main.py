@@ -1,13 +1,19 @@
 from flask import Flask, redirect, request, url_for, render_template
-from modules.projects.listprojet import getAllProject
-from modules.addproject.addprojet import addProject
 import constants as cs
 import csv
 from _ast import If
-
+from modules.projects.listprojet import getAllProject
+from modules.addproject.addprojet import addProject
 from modules.parametrage import crud
+from utils import deleteFromFileById
+
+
 
 app = Flask(__name__, template_folder='modules')
+
+@app.route("/")
+def index():
+    return pageListProjets()
 
 
 @app.route("/projects")
@@ -33,7 +39,16 @@ def pageAddProjet():
 def addRepo():
     errorMsg = ""
     errorMsg=addProject(request.form)
-    return redirect(url_for(".pageListProjets" , current="list", message = request.form['name'],error=errorMsg,listProjet=getAllProject()))
+    msg= "Le projet «" + request.form['name'] + "» est ajouté avec succès."
+    return redirect(url_for(".pageListProjets" , current="list", message = msg,error=errorMsg,listProjet=getAllProject()))
+
+@app.route('/api/delrepo', methods=['POST'])
+def deleteRepo():
+    errorMsg = ""
+    errorMsg=deleteFromFileById(request.form["id"],cs.PROJECT_FILE_PATH)
+    msg = "Le projet «" + request.form['name'] + "» est supprimé avec succès."
+    return redirect(url_for(".pageListProjets" , current="list", message = msg,error=errorMsg,listProjet=getAllProject()))
+
 
 @app.route('/parametrage-cloud', methods=["GET", "POST","PUT"])
 def create_bucket():
