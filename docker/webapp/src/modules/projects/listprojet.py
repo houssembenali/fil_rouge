@@ -7,7 +7,7 @@ import markdown
 from pathlib import Path
 from modules.parametrage import crud
 from modules.addproject.addprojet import checkTempDir
-from utils import viderdossier
+from utils import viderDossier
 
 ###################################################################################
 ############ Service du module liste et publication des projets ###################
@@ -63,7 +63,7 @@ def cloneProject(link):
     checkTempDir(cs.TMP_CLONE_PATH)
 
     # vider le dossier temporaire du clonage
-    viderdossier(cs.TMP_CLONE_PATH)
+    viderDossier(cs.TMP_CLONE_PATH)
 
     print("cloning ...")
     try:
@@ -77,43 +77,44 @@ def cloneProject(link):
     Méthode principal de la conversion et l'upload du projet
 '''  
 def publishFromFileById(id, name,link):
+    
+    bucketName = crud.get_bucket_name()
+    if bucketName == "":
+        return "Le nom du Bucket n'est pas configuré, merci de le configurer"
+    
 	projectName =os.path.splitext(os.path.basename(link))[0]
 	mainPath = cs.TMP_CLONE_PATH
 
 	isCloned = cloneProject(link)
 	if not isCloned:
 		return "le projet '" + projectName +"' non publié. Problème lors du clonage du répository GIT"
-    #variables
 	
     #Parcourir les fichiers MarkDown
-	lst = getListOfFiles(mainPath+ '/' +projectName)
-	for e in lst:
-		with open(e) as f:
+	lstFileMd = getListOfFiles(mainPath+ '/' +projectName)
+	for mdFile in lstFileMd:
+		with open(mdFile) as f:
 			try:
     				mdContent = f.read()
 			except:
-				print("Erreur de lécture du fichier : "+e)
+				print("Erreur de lécture du fichier : "+mdFile)
             #Conversion du contenu MD vers contenu HTML 
 			htmlContent = markdown.markdown(mdContent)
 			
             # Préparation des variable util pour réspécter l'arborescence des dossiers et sous-dossier pour les fichiers HTML 
-			tabPath = e.split("/")
+			tabPath = mdFile.split("/")
             # extraction nom du fichier
 			fileName = tabPath[len(tabPath)-1]
 			fileName = os.path.splitext(fileName)[0]
             # extraction des sous-dossiers
-			subFolder = e.replace(mainPath,"").replace(fileName+".md","")
+			subFolder = mdFile.replace(mainPath,"").replace(fileName+".md","")
             # Vérifier et créer l'arborescence des sous-dossiers
 			Path(mainPath+"/html/"+subFolder).mkdir(parents=True, exist_ok=True)
             # Génération du fichier HTML
 			with open (mainPath+"/html/"+subFolder+fileName+".html", "w") as fHtml:
 				fHtml.write(htmlContent)
     #Partie upload
-	bucketName = crud.get_bucket_name()
-	if bucketName == "":
-		return "Le nom du Bucket n'est pas configurer, merci de le configurer"
 
 	print('Upload du projet '+projectName)
 	os.system('aws s3 sync '+mainPath+'/html/'+projectName+ " s3://"+bucketName + " --acl bucket-owner-full-control --acl public-read")
-	viderdossier(cs.TMP_CLONE_PATH)
+	viderDossier(cs.TMP_CLONE_PATH)
 	return ""

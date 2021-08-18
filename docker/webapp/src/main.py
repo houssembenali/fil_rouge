@@ -8,12 +8,6 @@ from modules.addproject.addprojet import addProject
 from modules.parametrage import crud
 from utils import deleteFromFileById
 
-# TODO
-from modules.parametrage import crud
-import os
-import markdown
-from pathlib import Path
-
 
 app = Flask(__name__, template_folder='modules')
 

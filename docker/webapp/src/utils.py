@@ -35,7 +35,7 @@ def findFromFileById(id, path):
     return -1
 
 # Vider le dossier donnée
-def viderdossier(dirPath):
-    for f in os.listdir(dirPath):
-        if os.path.isdir(dirPath+"/"+f):
-            shutil.rmtree(os.path.abspath(dirPath+"/"+f))
+def viderDossier(chemin):
+    for f in os.listdir(chemin):
+        if os.path.isdir(chemin+"/"+f):
+            shutil.rmtree(os.path.abspath(chemin+"/"+f))
