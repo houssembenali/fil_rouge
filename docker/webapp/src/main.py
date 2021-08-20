@@ -52,7 +52,10 @@ def deleteRepo():
 @app.route('/api/pubrepo', methods=['POST'])
 def publishRepo():
     errorMsg = ""
-    errorMsg=publishFromFileById(request.form["id"],request.form["name"],request.form["link"])
+    isSommaire = False
+    if "sommaire" in request.form:
+        isSommaire=True
+    errorMsg=publishFromFileById(request.form["id"],request.form["name"],request.form["link"],isSommaire)
     msg = "Le projet «" + request.form['name'] + "» est publié avec succès."
     return redirect(url_for(".pageListProjets" , current="list", message = msg,error=errorMsg,listProjet=getAllProject()))
 
