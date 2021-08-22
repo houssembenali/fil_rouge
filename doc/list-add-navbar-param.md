@@ -72,6 +72,30 @@ Cette page permet nous permet de supprimer ou publier un projet.
 
 Figure 3 Page d'accueil (liste des projets)
 
+## Suppression des projets
+La suppression des projet ce fait directement a partir de la page de liste, chaque projet ayant sa propre bouton de suppression. 
+Pour respecter les règles de l'expression utilisateur (UX/UI) nous avons personnaliser le bouton de suppression en couleur rouge et une icone corbeille.
+
+![img](img/delete.png)
+
+Figure 4 Page d'accueil (bouton suppression de projet)
+
+On cliquant sur le bouton suppression et petite fenêtres pop-up va s'afficher pour demander a l'utilisateur de confirmer son choix de suppression on affichant le nom du projet séléctionner.
+L'utilisateur peux cliquer sur le bouton de confirmation de suppression en rouge, dans ce cas le projet va êtres définitivement supprimer.
+Sinon, l'utilisateur peux annuler cette demande on cliquant sur le bouton annuler en gris.
+
+![img](img/confirm-del.PNG)
+
+Figure 5 Fenêtre de pop-up de confirmation de suppression
+
+Pour finir si l'étape de suppression est effectuer avec sucée, une alerte afficher en vert va attester le bon déroulement de la demande de suppression on redirigeant l'utilisateur vers la page accueil (liste des projets).
+Le cas contraire, une alerte en rouge va notifier l'utilisateur qu'une erreur a intercepter la suppression on redirigeant ce dernier vers la page accueil (liste des projets).
+
+![img](img/del-ok.PNG)
+Figure 6 Alerte de suppression avec sucée
+
+![img](img/notok-del.PNG)
+Figure 7 Alerte de suppression avec erreur
 
 # Page Pamétrage Cloud
 
@@ -82,7 +106,7 @@ La page paramétrage cloud permet de définir le nom du bucket via l'IHM en resp
 * Les noms de compartiment ne peuvent être constitués que de lettres minuscules, de chiffres, de points (.) et de tirets (-).
 
 * Les noms de buckets doivent commencer et se terminer par une lettre ou un chiffre.
- 
+
 ![img](img/param-bucket.PNG)
 
  
