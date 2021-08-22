@@ -97,7 +97,35 @@ Figure 6 Alerte de suppression avec sucée
 ![img](img/notok-del.PNG)
 Figure 7 Alerte de suppression avec erreur
 
-# Page Pamétrage Cloud
+## Publication des projets
+Notre application permet aussi d'héberger des site web statique dans le cloud on lui donnant uniquement le repository git.
+Dans cette étape, l'application va scanner tous les repository sélectionner et extraire tous fichier mark down existant, ensuite l'application va convertir ces dernier en fichier Web HTML.
+En fin, il vont êtres héberger automatiquement dans le cloud tous on respectant les nom des fichier et tous l'arborescence des dossiers et sous-dossier du repository git.
+
+La publication se fait a travers la page accueil (liste des projet), on cliquant uniquement sur le bouton vert "publier" avec l'icone indiquant l'étape de publication.
+
+![img](img/publish.png)
+Figure 7 Bouton de publication de projet
+
+On cliquant sur le bouton de publication, l'application va afficher une fenêtres pop-up pour confirmer la publication de ce dernier.
+L'utilisateur a la possibilité d'ajouter une table de matière au début de  chaque fichier générer, on cliquant ou non sur la case a coché afficher dans la fenêtre.
+En fin, l'utilisateur peux confirmer sa publication du projet on cliquant sur le bouton vert "publier" pour commencer l'étape de publication ou annuler se dernier via le bouton "annuler" en gris 
+
+![img](img/confirm-publish.PNG)
+Figure 7 Bouton de publication de projet
+
+Après quelques seconde de la confirmation, pendant que l'application scanne, converti et héberge les fichier du repository, l'application va afficher, si c'est ok, une alerte en vert tout on redirigeant l'utilisateur vers la page liste des projets, on indiquant que la publication est effectuer avec sucée.
+
+![img](img/publish-ok.PNG)
+Figure 7 Alerte de publication avec sucée
+
+Si le cas échéant, une alerte en rouge va êtres afficher pour indiquer qu'il y a eu une erreur lors de la publication.
+
+![img](img/notok-publish.PNG)
+Figure 7 Alerte de publication avec erreur
+
+
+# Page Paramétrage Cloud
 
 La page paramétrage cloud permet de définir le nom du bucket via l'IHM en respectant les critères définis par aws à savoir :
 
