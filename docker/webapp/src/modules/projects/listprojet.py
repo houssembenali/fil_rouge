@@ -4,6 +4,7 @@ import constants as cs
 
 import git
 import markdown
+import md_toc
 from pathlib import Path
 from modules.parametrage import crud
 from modules.addproject.addprojet import checkTempDir
@@ -76,12 +77,12 @@ def cloneProject(link):
 '''
     Méthode principal de la conversion et l'upload du projet
 '''  
-def publishFromFileById(id, name,link):
-    
-    bucketName = crud.get_bucket_name()
-    if bucketName == "":
-        return "Le nom du Bucket n'est pas configuré, merci de le configurer"
-    
+def publishFromFileById(id, name,link,isSommaire):
+	
+	bucketName = crud.get_bucket_name()
+	if bucketName == "":
+		return "Le nom du Bucket n'est pas configuré, merci de le configurer"
+	
 	projectName =os.path.splitext(os.path.basename(link))[0]
 	mainPath = cs.TMP_CLONE_PATH
 
@@ -97,9 +98,11 @@ def publishFromFileById(id, name,link):
     				mdContent = f.read()
 			except:
 				print("Erreur de lécture du fichier : "+mdFile)
-            #Conversion du contenu MD vers contenu HTML 
+            #Ajout Sommaire
+			if isSommaire:
+				mdContent="# SOMMAIRE \n" + md_toc.build_toc(mdFile)+mdContent
+			#Conversion du contenu MD vers contenu HTML 
 			htmlContent = markdown.markdown(mdContent)
-			
             # Préparation des variable util pour réspécter l'arborescence des dossiers et sous-dossier pour les fichiers HTML 
 			tabPath = mdFile.split("/")
             # extraction nom du fichier

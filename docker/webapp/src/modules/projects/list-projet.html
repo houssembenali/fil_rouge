@@ -80,14 +80,20 @@
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Suppression du projet</h5>
         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-        
+        <form action="http://localhost:5000/api/pubrepo" method="POST">
       </div>
       <div class="modal-body">
         Voulez-vous publier le projet ?
+        <div class="form-check" >
+          <input class="form-check-input" type="checkbox" value="" id="sommaire" name="sommaire">
+          <label class="form-check-label" for="sommaire"> afficher les tables de matière lors de la génération </label>
+        </div>
       </div>
+      
       <div class="modal-footer">
-      <form action="http://localhost:5000/api/pubrepo" method="POST">
-      <input class="form-control" name="name" id="name" type="hidden"><input class="form-control" name="id" id="id" type="hidden"><input class="form-control" name="link" id="link" type="hidden">
+      
+        
+        <input class="form-control" name="name" id="name" type="hidden"><input class="form-control" name="id" id="id" type="hidden"><input class="form-control" name="link" id="link" type="hidden">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
         <button  type="submit"  class="btn btn-success show-toast">Publier</button>
         </form>
