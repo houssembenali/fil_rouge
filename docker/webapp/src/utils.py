@@ -1,4 +1,6 @@
 import csv
+import os
+import shutil
 
 def deleteFromFileById(id,path):
     projects_file = open(path, "r")
@@ -31,3 +33,9 @@ def findFromFileById(id, path):
                     return line_count
     print ('projet non trouvée ID= '+str(id))
     return -1
+
+# Vider le dossier donnée
+def viderDossier(chemin):
+    for f in os.listdir(chemin):
+        if os.path.isdir(chemin+"/"+f):
+            shutil.rmtree(os.path.abspath(chemin+"/"+f))
