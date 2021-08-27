@@ -1,0 +1,30 @@
+{% extends "template/page.html" %} 
+{% block title %} 
+	Ajout d'un projet
+{% endblock %} 
+
+
+{% block content %}
+<h3>Ajout d'un projet</h3>
+<br />
+
+
+
+
+<form action="http://localhost:5000/api/addrepo" method="POST">
+  <div class="form-group" >
+    <label for="exampleInputEmail1">Nom du Projet</label>
+    <input type="text" class="form-control" id="name" name="name" required pattern="^[ A-Za-z0-9_-]{1,30}$" placeholder="exemple : Projet covoiturage">
+    <small id="NameHelp" class="form-text text-muted">Le Nom du Projet ne peut être composé que de caractères alphanumériques, d'espaces et des tirets  '-' et '_' . Max 30 caractères</small>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Url du Dépot Git</label>
+    <input type="url" class="form-control" id="link" name="link" required
+    placeholder="exemple : https://github.com/user/repo.git">
+    <small id="urlHelp" class="form-text text-muted">Exemple repo priver : https://api_private_key:x-oauth-basic@github.com/user/repo.git</small>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Ajouter</button>
+</form>
+
+{% endblock %}

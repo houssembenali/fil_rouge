@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 ## On met à jour le systeme pour pouvoir installer
 
@@ -53,7 +53,6 @@ systemctl enable --now nexus.service
 
 sleep 180
 sudo /opt/nexus/bin/nexus stop
-sudo sed -i 's/# application-port=8081/application-port=8086/' /opt/nexus/sonatype-work/nexus3/etc/nexus.properties
 sudo sed -i 's/# application-host=0.0.0.0/application-host=192.168.20.12/' /opt/nexus/sonatype-work/nexus3/etc/nexus.properties
 systemctl daemon-reload
 systemctl enable --now nexus.service
@@ -61,7 +60,7 @@ systemctl enable --now nexus.service
 ## On active le firewall, on ouvre le port 8086 et les connexions ssh
 
 yes | sudo ufw enable
-sudo ufw allow 8086/tcp
+sudo ufw allow 8081/tcp
 sudo ufw allow ssh
 
 ## Afficher le mot de passe
