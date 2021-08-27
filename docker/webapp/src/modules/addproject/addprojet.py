@@ -5,7 +5,6 @@ import shutil
 import stat
 import os
 
-# Méthode principal de vérification et insértion de projet
 def addProject(resultat):
     checkTempDir(cs.TMP_CLONE_PATH)
     nom = resultat['name']
@@ -15,21 +14,16 @@ def addProject(resultat):
         if not isUrlExist(link):
             if isUrlExistInNet(link):
                 id = getNewId()
-                insertProject(id,nom,link)
+                with open(cs.PROJECT_FILE_PATH, mode='a',newline='') as projects_file:
+                    projects_writer = csv.writer(projects_file, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                    projects_writer.writerow([id,nom,link])
             else:
-                error = "L'URL Git du projet "+ nom + " n'est pas accecible. Projet non ajouter, merci de verifier votre lien SVP"
+                error = "L'URL Git du projet "+ nom + " n'est pas accessible. Projet non ajouté, merci de verifier votre lien SVP"
         else:
-            error = "L'URL Git du projet "+ nom + " existe deja. Projet non ajouter"
+            error = "L'URL Git du projet "+ nom + " existe deja. Projet non ajouté"
     else:
-        error = 'Le nom '+ nom + ' existe deja. Projet non ajouter'
+        error = 'Le nom '+ nom + ' existe deja. Projet non ajouté'
     return error
-
-
-# ajouter un nouveau projet dans le fichier a partir des détails du projet
-def insertProject(id,nom,link):
-    with open(cs.PROJECT_FILE_PATH, mode='a',newline='') as projects_file:
-        projects_writer = csv.writer(projects_file, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        projects_writer.writerow([id,nom,link])
     
 # Verification de l'existance de l'URL dans internet (github, gitlab, ...)
 def isUrlExistInNet(link):

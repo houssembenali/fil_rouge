@@ -1,22 +1,32 @@
 from flask import Flask, redirect, request, url_for, render_template
+from flask_login import login_user, current_user, login_required, logout_user
+from modules.projects.listprojet import getAllProject
+from modules.addproject.addprojet import addProject
 import constants as cs
 import csv
 from _ast import If
-from modules.projects.listprojet import getAllProject
-from modules.projects.listprojet import publishFromFileById
-from modules.addproject.addprojet import addProject
-from modules.parametrage import crud
-from utils import deleteFromFileById
 
+from modules.parametrage import crud
 
 app = Flask(__name__, template_folder='modules')
 
-@app.route("/")
-def index():
-    return pageListProjets()
 
+@app.route('/')
+def index():
+    return render_template('login/templates/index.html', current_user="")
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            error = 'Invalid Credentials. Please try again.'
+        else:
+            return redirect(url_for('pageListProjets'))
+    return render_template('login/templates/login.html', error=error, current="login", current_user="")
 
 @app.route("/projects")
+@login_required
 def pageListProjets():
     if 'message' in request.args:
         msg=request.args.get("message")
@@ -27,40 +37,24 @@ def pageListProjets():
         errorMsg=request.args.get("error")
     else:
         errorMsg=""
-    return render_template("projects/list-projet.html", message=msg,error=errorMsg, current="list",listProjet=getAllProject())
+    return render_template("projects/list-projet.html", message=msg,error=errorMsg, current_user="admin", current="list",listProjet=getAllProject())
 
 
 @app.route("/addproject")
+@login_required
 def pageAddProjet():
     return render_template("addproject/add-projet.html",current="add")
 
 
 @app.route('/api/addrepo', methods=['POST'])
+@login_required
 def addRepo():
     errorMsg = ""
     errorMsg=addProject(request.form)
-    msg= "Le projet «" + request.form['name'] + "» est ajouté avec succès."
-    return redirect(url_for(".pageListProjets" , current="list", message = msg,error=errorMsg,listProjet=getAllProject()))
-
-@app.route('/api/delrepo', methods=['POST'])
-def deleteRepo():
-    errorMsg = ""
-    errorMsg=deleteFromFileById(request.form["id"],cs.PROJECT_FILE_PATH)
-    msg = "Le projet «" + request.form['name'] + "» est supprimé avec succès."
-    return redirect(url_for(".pageListProjets" , current="list", message = msg,error=errorMsg,listProjet=getAllProject()))
-
-@app.route('/api/pubrepo', methods=['POST'])
-def publishRepo():
-    errorMsg = ""
-    isSommaire = False
-    if "sommaire" in request.form:
-        isSommaire=True
-    errorMsg=publishFromFileById(request.form["id"],request.form["name"],request.form["link"],isSommaire)
-    msg = "Le projet «" + request.form['name'] + "» est publié avec succès."
-    return redirect(url_for(".pageListProjets" , current="list", message = msg,error=errorMsg,listProjet=getAllProject()))
-
+    return redirect(url_for(".pageListProjets" , current="list", current_user="admin", message = request.form['name'],error=errorMsg,listProjet=getAllProject()))
 
 @app.route('/parametrage-cloud', methods=["GET", "POST","PUT"])
+@login_required
 def create_bucket():
     """
         Methode permettant la création du bucket
@@ -72,5 +66,15 @@ def create_bucket():
 
     return render_template('parametrage/templates/parametrage.html', bucket_file=crud.get_bucket_name(), current="param")
 
+@app.route('/logout')
+@login_required
+def logout():
+    user = current_user
+    logout_user()
+    return render_template('login/templates/index.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
+    login = LoginManager()
+    login.login_view = "users.login"
+
