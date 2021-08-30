@@ -4,8 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate # Was missing in example code.
 
-# init SQLAlchemy so we can use it later in our models
-db = SQLAlchemy()
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -20,17 +18,6 @@ def create_app():
 
     initialize_extensions(app)
 
-
-    # login_manager = LoginManager()
-    # login_manager.login_view = 'auth.login'
-    # login_manager.init_app(app)
-
-    # from .models import User
-
-    # @login_manager.user_loader
-    # def load_user(user_id):
-    #     # since the user_id is just the primary key of our user table, use it in the query for the user
-    #     return User.query.get(int(user_id))
 
     # blueprint for auth routes in our app
     from modules.login.auth import auth as auth_blueprint
@@ -67,7 +54,3 @@ def initialize_extensions(app):
     def load_user(user_id):
         # since the user_id is just the primary key of our user table, use it in the query for the user
         return User.query.get(int(user_id))
-
-    # @login.user_loader
-    # def load_user(user_id):
-    #     return User.query.filter(User.id == int(user_id)).first()

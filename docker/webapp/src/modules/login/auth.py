@@ -1,18 +1,25 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from .models import User
 from .. import db
 
 auth = Blueprint('auth', __name__, template_folder='templates')
 
+
 @auth.route('/login')
 def login():
-    return render_template('login.html')
+    if  current_user.is_authenticated: 
+        return redirect(url_for('projects.pageListProjets'))
+    else:
+        return render_template('login.html')
 
 @auth.route('/signup')
 def signup():
-    return render_template('signup.html')
+    if current_user.is_authenticated: 
+        return redirect(url_for('projects.pageListProjets'))
+    else:
+        return render_template('signup.html')
 
 @auth.route('/login', methods=['POST'])
 def login_post():

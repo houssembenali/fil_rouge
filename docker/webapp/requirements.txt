@@ -2,3 +2,9 @@ flask
 GitPython
 markdown
 md_toc
+Flask-Migrate
+flask-login
+Flask-SQLAlchemy
+flask_bcrypt
+flask_wtf
+email_validator

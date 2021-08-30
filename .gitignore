@@ -13,3 +13,6 @@ vagrant/nexus/vagrant/
 docker/webapp/src/temp
 vagrant/nexus/project/
 vagrant/nexus/ubuntu-bionic-18.04-cloudimg-console.log
+docker/webapp/src/modules/db.sqlite
+*/__pycache__
+docker/webapp/src/migrations
