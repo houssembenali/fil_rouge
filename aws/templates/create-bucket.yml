@@ -1,0 +1,17 @@
+# Un modèle de bucket S3
+
+---
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: fil-rouge-template
+
+Parameters:
+  BucketName:
+    Description: The name of bucket S3.
+    Type: String
+    Default: "Bucket S3 Fil Rouge"
+
+Resources:
+  MyS3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
