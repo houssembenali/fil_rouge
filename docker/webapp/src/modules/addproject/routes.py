@@ -26,9 +26,9 @@ def pageAddProjet():
 @login_required
 def addRepo():
     errorMsg = ""
-    errorMsg=addProject(request.form)
+    errorMsg=addprojet.addProject(request.form)
     msg= "Le projet «" + request.form['name'] + "» est ajouté avec succès."
-    return redirect(url_for(".pageListProjets" , current="list", message = msg,error=errorMsg,listProjet=getAllProject()))
+    return redirect(url_for("projects.pageListProjets" , current="list", message = msg,error=errorMsg,listProjet=getAllProject()))
 
 @addproject_blueprint.route('/api/delrepo', methods=['POST'])
 @login_required
