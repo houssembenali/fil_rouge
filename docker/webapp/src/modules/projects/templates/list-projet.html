@@ -46,7 +46,7 @@
 
 
 <!-- Modal delete-->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="false">
   <div class="modal-dialog">
     <div class="modal-content">
     
@@ -60,7 +60,7 @@
         Voulez-vous supprimer le projet ?
       </div>
       <div class="modal-footer">
-      <form action="http://localhost:5000/api/delrepo" method="POST">
+      <form action="/api/delrepo" method="POST">
       <input class="form-control" name="name" id="name" type="hidden"><input class="form-control" name="id" id="id" type="hidden">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
         <button  type="submit"  class="btn btn-danger">Supprimer</button>
@@ -72,15 +72,15 @@
 </div>
 
 <!-- Modal publish-->
-<div class="modal fade" id="publishModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="publishModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
   <div class="modal-dialog">
     <div class="modal-content">
     
     
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Suppression du projet</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Publication du projet</h5>
         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-        <form action="http://localhost:5000/api/pubrepo" method="POST">
+        <form action="/api/pubrepo" method="POST">
       </div>
       <div class="modal-body">
         Voulez-vous publier le projet ?
