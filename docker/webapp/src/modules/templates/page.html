@@ -29,14 +29,14 @@
 	        	<a class="nav-link  {% if current== 'add' %}   active {% endif %} " href="addproject">Ajout projet</a>
 	        	<a class="nav-link  {% if current== 'param' %} active {% endif %} " href="parametrage-cloud">Paramétrage</a>
 			{% else %}
-				<a class="nav-link" href="{{ url_for('auth.signup') }}" >Sign Up</a>
+				<a class="nav-link" href="{{ url_for('auth.signup') }}" >S'enregistrer</a>
 			{% endif %}
 			</div>
 	    </div>
 		{% if current_user.is_authenticated %}
-			<h2>Welcome, {{ current_user.name }}!</h2>
+			<h2 style="color:white">Bienvenu, {{ current_user.name }}!</h2>
 			<a href="logout">
-				<button type="button" class="btn btn-danger">Deconnexion</button>
+				<button type="button" class="btn btn-danger">Déconnexion</button>
 			</a>
 
 		{% else %}
@@ -126,7 +126,7 @@ html {
 	  var id = button.data('id')
 	  var link = button.data('link')
 	  var modal = $(this)
-	  modal.find('.modal-title').text('Suppression du projet ' +name)
+	  modal.find('.modal-title').text('Publication du projet ' +name)
 	  modal.find('#name').val(name)
 	  modal.find('#id').val(id)
 	  modal.find('#link').val(link)

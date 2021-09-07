@@ -8,10 +8,11 @@ from modules.projects.listprojet import get_all_projects, publish_from_file_by_i
 from modules.addproject import addprojet
 from utils import delete_from_file_by_id
 import constants as cs
+import wordings
 
 addproject_blueprint = Blueprint('addproject', __name__, template_folder='templates')
 
-PROJECTS_PAGE_LIST_PROJETS = "projects.pageListProjets"
+PROJECTS_PAGE_LIST_PROJETS = "projects.page_list_projets"
 
 ################
 #### routes ####
@@ -28,7 +29,7 @@ def page_add_projet():
 def add_repo():
     errormsg = ""
     errormsg = addprojet.add_project(request.form)
-    msg= "Le projet «" + request.form['name'] + "» est ajouté avec succès."
+    msg= wordings.PROJET_AJOUTE_SUCCES.format(name=request.form['name'])
     return redirect(url_for(PROJECTS_PAGE_LIST_PROJETS , current="list", message = msg,error=errormsg,listProjet=get_all_projects()))
 
 @addproject_blueprint.route('/api/delrepo', methods=['POST'])
@@ -36,7 +37,7 @@ def add_repo():
 def delete_repo():
     errormsg = ""
     errormsg=delete_from_file_by_id(request.form["id"],cs.PROJECT_FILE_PATH)
-    msg = "Le projet «" + request.form['name'] + "» est supprimé avec succès."
+    msg = wordings.PROJET_SUPPRIME_SUCCES.format(name=request.form['name'])
     return redirect(url_for(PROJECTS_PAGE_LIST_PROJETS , current="list", message = msg,error=errormsg,listProjet=get_all_projects()))
 
 @addproject_blueprint.route('/api/pubrepo', methods=['POST'])
@@ -47,5 +48,5 @@ def publish_repo():
     if "sommaire" in request.form:
         has_summary=True
     errormsg = publish_from_file_by_id(request.form["id"],request.form["name"],request.form["link"],has_summary)
-    msg = "Le projet «" + request.form['name'] + "» est publié avec succès."
+    msg = wordings.PROJET_PUBLIE_SUCCES.format(name=request.form['name'])
     return redirect(url_for(PROJECTS_PAGE_LIST_PROJETS , current="list", message = msg,error=errormsg,listProjet=get_all_projects()))

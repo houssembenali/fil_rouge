@@ -7,6 +7,7 @@ import md_toc
 from pathlib import Path
 from modules.parametrage import crud
 import utils
+import wordings
 
 EN_TETE_SOMMAIRE = "# SOMMAIRE \n"
 
@@ -79,14 +80,14 @@ def publish_from_file_by_id(link,issummary):
 	
 	bucketname = crud.get_bucket_name()
 	if bucketname == "":
-		return "Le nom du Bucket n'est pas configuré, merci de le configurer"
+		return wordings.NOM_BUCKET_NON_CONFIGURE
 	
 	projectname = os.path.splitext(os.path.basename(link))[0]
 	mainpath = cs.TMP_CLONE_PATH
 
 	iscloned = __clone_project(link)
 	if not iscloned:
-		return "le projet '" + projectname +"' non publié. Problème lors du clonage du répository GIT"
+		return wordings.PROJET_NON_PUBLIE_ERREUR_CLONAGE.format(name=projectname)
 	
     #Parcourir les fichiers MarkDown
 	listfilemd = __get_list_of_files(mainpath + '/' + projectname)

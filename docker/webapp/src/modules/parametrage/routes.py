@@ -5,7 +5,7 @@
 from flask import Blueprint, request, render_template
 from flask_login import login_required
 
-import crud
+from modules.parametrage import crud
 
 parametrage_blueprint = Blueprint('parametrage', __name__, template_folder='templates')
 

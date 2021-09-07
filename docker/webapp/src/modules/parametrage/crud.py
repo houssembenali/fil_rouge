@@ -1,4 +1,4 @@
-import bdd_file
+from modules.parametrage import bdd_file
 
 
 def create_bucket_name(paramBucket):

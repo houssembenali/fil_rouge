@@ -4,6 +4,7 @@ import git
 import shutil
 import os
 import utils
+import wordings
 
 # Ajoute le projet et ses informations au fichier de listing des projets. Si des erreurs sont rencontrées,
 #  renvoie une string pour tracer le soucis.
@@ -20,11 +21,11 @@ def add_project(resultat):
                     projects_writer = csv.writer(projects_file, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                     projects_writer.writerow([id,nom,link])
             else:
-                error = "L'URL Git du projet "+ nom + " n'est pas accessible. Projet non ajouté, merci de vérifier votre lien SVP."
+                error = wordings.URL_GIT_INVALIDE.format(name=nom)
         else:
-            error = "L'URL Git du projet "+ nom + " existe deja. Projet non ajouté."
+            error = wordings.URL_GIT_DEJA_UTILISEE.format(name=nom)
     else:
-        error = 'Le nom '+ nom + ' existe deja. Projet non ajouté.'
+        error = wordings.NOM_PROJET_DEJA_UTILISE.format(name=nom)
     return error
     
 # Vérification de l'existence de l'URL dans Github ou Gitlab. Si l'url existe, clone le projet.
