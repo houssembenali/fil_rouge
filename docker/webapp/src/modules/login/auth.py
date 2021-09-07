@@ -6,24 +6,24 @@ from .. import db
 
 auth = Blueprint('auth', __name__, template_folder='templates')
 
+PROJECTS_PAGE_LIST_PROJETS = "projects.pageListProjets"
 
 @auth.route('/login')
 def login():
     if  current_user.is_authenticated: 
-        return redirect(url_for('projects.pageListProjets'))
+        return redirect(url_for(PROJECTS_PAGE_LIST_PROJETS))
     else:
         return render_template('login.html')
 
 @auth.route('/signup')
 def signup():
     if current_user.is_authenticated: 
-        return redirect(url_for('projects.pageListProjets'))
+        return redirect(url_for(PROJECTS_PAGE_LIST_PROJETS))
     else:
         return render_template('signup.html')
 
 @auth.route('/login', methods=['POST'])
 def login_post():
-    email = request.form.get('email')
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
     name = request.form.get('name')
@@ -39,7 +39,7 @@ def login_post():
 
     # if the above check passes, then we know the user has the right credentials
     login_user(user, remember=remember)
-    return redirect(url_for('projects.pageListProjets'))
+    return redirect(url_for(PROJECTS_PAGE_LIST_PROJETS))
 
 @auth.route('/signup', methods=['POST'])
 def signup_post():

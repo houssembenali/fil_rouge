@@ -3,7 +3,7 @@ import constants as cs
 
 def read_bd():
     """
-        Methode permettant d'aller lire les données qui se trouve dans notre fichier
+        Méthode permettant d'aller lire les données qui se trouvent dans notre fichier.
     :return:
     """
     if os.path.isfile(cs.FILE_PATH) and os.access(cs.FILE_PATH, os.R_OK):
@@ -16,8 +16,8 @@ def read_bd():
         
 def write_bd(data):
     """
-        Methode permettant de mettre à jour
-    :param data: list data qu'on va mettre dans notre fichier
+        Méthode permettant de mettre à jour les données présentes dans le fichier.
+    :param data: la liste de données qu'on va mettre dans notre fichier.
     :return:
     """
     with open(cs.FILE_PATH, "w", encoding="utf-8") as read_file:

@@ -2,27 +2,29 @@ import csv
 import os
 import shutil
 
-def deleteFromFileById(id,path):
+# Supprime un projet du fichier de listing à l'aide de son id. Retourne un message 
+# d'erreur si le projet n'est pas trouvé.
+def delete_from_file_by_id(id,path):
+    messageretour = ""
     projects_file = open(path, "r")
     lines = projects_file.readlines()
     projects_file.close()
-    #supprimer ligne
-    index = findFromFileById(id,path)
+    # supprimer la ligne.
+    index = __find_from_file_by_id(id,path)
     if index < 0:
-        return 'Erreur de suppression '
-    
-    del lines[index]
-    #reecrir fichier apres suppression ligne
-    new_file = open(path, "w+")
-    for line in lines:
-        new_file.write(line)
-    new_file.close()
-    return ''
-        
+        messageretour = 'Erreur de suppression, id non trouvé.'
+    else:
+        del lines[index]
+        # Réecrire le fichier après suppression de la ligne.
+        new_file = open(path, "w+")
+        for line in lines:
+            new_file.write(line)
+        new_file.close()
+    return messageretour
 
-
-
-def findFromFileById(id, path):
+# Cherche dans le fichier de listing des projets les informations d'un projet à l'aide de son id. 
+# Renvoie l'id si trouvé.        
+def __find_from_file_by_id(id, path):
     with open(path, 'rt') as f:
         reader = csv.reader(f, delimiter=';')
         line_count = -1
@@ -34,8 +36,15 @@ def findFromFileById(id, path):
     print ('projet non trouvée ID= '+str(id))
     return -1
 
-# Vider le dossier donnée
-def viderDossier(chemin):
+# Vide le dossier données.
+def vider_dossier(chemin):
     for f in os.listdir(chemin):
         if os.path.isdir(chemin+"/"+f):
             shutil.rmtree(os.path.abspath(chemin+"/"+f))
+
+# Création du répertoire s'il n'existe pas.
+def check_temp_dir(dirName):
+    try:
+        os.makedirs(dirName)    
+    except FileExistsError:
+        print("Directory " , dirName ,  " already exists")

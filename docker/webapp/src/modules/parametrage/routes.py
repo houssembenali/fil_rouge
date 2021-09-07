@@ -2,10 +2,10 @@
 #### imports ####
 #################
 
-from flask import Flask, redirect, Blueprint, request, url_for, render_template
+from flask import Blueprint, request, render_template
 from flask_login import login_required
 
-from modules.parametrage import crud
+import crud
 
 parametrage_blueprint = Blueprint('parametrage', __name__, template_folder='templates')
 
