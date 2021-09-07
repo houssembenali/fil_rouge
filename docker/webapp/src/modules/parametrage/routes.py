@@ -2,7 +2,7 @@
 #### imports ####
 #################
 
-from flask import Flask, redirect, Blueprint, request, url_for, render_template
+from flask import Blueprint, request, render_template
 from flask_login import login_required
 
 from modules.parametrage import crud

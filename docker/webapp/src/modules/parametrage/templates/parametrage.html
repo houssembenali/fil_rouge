@@ -61,7 +61,7 @@ input:valid {
               setCustomValidity('');
               checkValidity();
               if (validity.patternMismatch) {
-                  setCustomValidity('le nom du bucket doit être constitué que de lettres minuscules, de chiffres, de points (.) et de tirets (-).\n Et doit commencé et se terminé par une lettre ou un chiffre');
+                  setCustomValidity('Le nom du bucket doit être constitué que de lettres minuscules, de chiffres, de points (.) et de tirets (-).\n Et doit commencer et se terminer par une lettre ou un chiffre');
               }
               else if (validity.valueMissing) {
                   setCustomValidity('Veuillez renseigner ce champ.');
