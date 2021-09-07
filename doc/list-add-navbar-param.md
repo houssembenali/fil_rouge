@@ -137,4 +137,24 @@ La page paramétrage cloud permet de définir le nom du bucket via l'IHM en resp
 
 ![img](img/param-bucket.PNG)
 
+ NB : merci de mettre ce bout de code ci-dessous dans le champs "Stratégie de compartiment" situé dans rebrique "Autorisations" du bucket s3.
+ ```
+ {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::REMPLACER_CECI_PAR_VOTRE_NOM_DU_BUCKET/*",
+            "Condition": {
+                "StringEquals": {
+                    "s3:ExistingObjectTag/public": "yes"
+                }
+            }
+        }
+    ]
+}
+
+ ```
  
