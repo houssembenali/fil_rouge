@@ -118,6 +118,6 @@ def publishFromFileById(id, name,link,isSommaire):
     #Partie upload
 
 	print('Upload du projet '+projectName)
-	os.system('aws s3 sync '+mainPath+'/html/'+projectName+ " s3://"+bucketName + " --acl bucket-owner-full-control --acl public-read")
+	os.system('aws s3 sync '+mainPath+'/html/'+projectName+ " s3://"+bucketName + " --acl public-read")
 	viderDossier(cs.TMP_CLONE_PATH)
 	return ""
