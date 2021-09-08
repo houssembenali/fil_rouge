@@ -47,6 +47,6 @@ def publish_repo():
     has_summary = False
     if "sommaire" in request.form:
         has_summary=True
-    errormsg = publish_from_file_by_id(request.form["id"],request.form["name"],request.form["link"],has_summary)
+    errormsg = publish_from_file_by_id(request.form["link"],has_summary)
     msg = wordings.PROJET_PUBLIE_SUCCES.format(name=request.form['name'])
     return redirect(url_for(PROJECTS_PAGE_LIST_PROJETS , current="list", message = msg,error=errormsg,listProjet=get_all_projects()))
