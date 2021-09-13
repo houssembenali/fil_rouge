@@ -11,7 +11,6 @@ erreur = Blueprint('erreur', __name__, template_folder='templates')
 @app.errorhandler(404)
 def not_found(e):
     print(e)
-    print("toto")
     return render_template("erreur.html")
 
 
