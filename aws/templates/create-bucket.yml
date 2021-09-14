@@ -1,9 +1,9 @@
-# Un modèle de bucket S3
+# Documentation
 
 ---
 AWSTemplateFormatVersion: '2010-09-09'
 
-Description: fil-rouge-template
+Description: fil-rouge S3 bucket
 
 Parameters:
   BucketName:
@@ -15,3 +15,4 @@ Resources:
   MyS3Bucket:
     Type: 'AWS::S3::Bucket'
     Properties:
+      BucketName: 'groupe4-cloudformation'

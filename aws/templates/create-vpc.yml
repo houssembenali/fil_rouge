@@ -5,108 +5,248 @@
 
 AWSTemplateFormatVersion: "2010-09-09"
 
-Description: 'Creates a VPC'
+Description:  This template deploys a VPC, with a pair of public and private subnets spread
+  across two Availability Zones. It deploys an internet gateway, with a default
+  route on the public subnets. It deploys a pair of NAT gateways (one in each AZ),
+  and default routes for them in the private subnets.
 
 Parameters:
-  VPCName:
-    Description: The name of the VPC being created.
+  EnvironmentName:
+    Description: An environment name that is prefixed to resource names
     Type: String
-    Default: "VPC Public and Private with NAT"
+    Default: G4filrouge
+
+  VpcCIDR:
+    Description: Please enter the IP range (CIDR notation) for this VPC
+    Type: String
+    Default: 10.192.0.0/16
+
+  G4PublicSubnet1CIDR:
+    Description: Please enter the IP range (CIDR notation) for the public subnet in the first Availability Zone
+    Type: String
+    Default: 10.192.10.0/24
+
+  G4PublicSubnet2CIDR:
+    Description: Please enter the IP range (CIDR notation) for the public subnet in the second Availability Zone
+    Type: String
+    Default: 10.192.11.0/24
+
+  G4PrivateSubnet1CIDR:
+    Description: Please enter the IP range (CIDR notation) for the private subnet in the first Availability Zone
+    Type: String
+    Default: 10.192.20.0/24
+
+  G4PrivateSubnet2CIDR:
+    Description: Please enter the IP range (CIDR notation) for the private subnet in the second Availability Zone
+    Type: String
+    Default: 10.192.21.0/24
 
 Resources:
-  PubPrivateVPC:
-    Type: 'AWS::EC2::VPC'
+  VPC:
+    Type: AWS::EC2::VPC
     Properties:
-      CidrBlock: 172.13.0.0/16
-    
-  PublicSubnet:
-    Type: 'AWS::EC2::Subnet'
-    Properties:
-      VpcId: !Ref PubPrivateVPC
-      AvailabilityZone: eu-west-3a
-      CidrBlock: 172.13.1.0/24
-      MapPublicIpOnLaunch: true
-  
-  PrivateSubnet:
-    Type: 'AWS::EC2::Subnet'
-    Properties:
-      VpcId: !Ref PubPrivateVPC
-      AvailabilityZone: eu-west-3a
-      CidrBlock: 172.13.2.0/24
-      MapPublicIpOnLaunch: false
-    
+      CidrBlock: !Ref VpcCIDR
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: !Ref EnvironmentName
+
   InternetGateway:
-    Type: 'AWS::EC2::InternetGateway'
+    Type: AWS::EC2::InternetGateway
     Properties:
       Tags:
         - Key: Name
-          Value: !Join [_, [!Ref 'AWS::StackName']]
-        - Key: Network
-          Value: Public
+          Value: !Ref EnvironmentName
 
-  GatewayToInternet:
-    Type: 'AWS::EC2::VPCGatewayAttachment'
+  InternetGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
     Properties:
-      VpcId: !Ref PubPrivateVPC
       InternetGatewayId: !Ref InternetGateway
+      VpcId: !Ref VPC
+
+  G4PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [ 0, !GetAZs '' ]
+      CidrBlock: !Ref G4PublicSubnet1CIDR
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName} Public Subnet (AZ1)
+
+  G4PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
+      CidrBlock: !Ref G4PublicSubnet2CIDR
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName} Public Subnet (AZ2)
+
+  G4PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [ 0, !GetAZs  '' ]
+      CidrBlock: !Ref G4PrivateSubnet1CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName} Private Subnet (AZ1)
+
+  G4PrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
+      CidrBlock: !Ref G4PrivateSubnet2CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName} Private Subnet (AZ2)
+
+  G4NatGateway1EIP:
+    Type: AWS::EC2::EIP
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      Domain: vpc
+
+  G4NatGateway2EIP:
+    Type: AWS::EC2::EIP
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      Domain: vpc
+
+  G4NatGateway1:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt G4NatGateway1EIP.AllocationId
+      SubnetId: !Ref G4PublicSubnet1
+
+  G4NatGateway2:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt G4NatGateway2EIP.AllocationId
+      SubnetId: !Ref G4PublicSubnet2
 
   PublicRouteTable:
-    Type: 'AWS::EC2::RouteTable'
+    Type: AWS::EC2::RouteTable
     Properties:
-      VpcId: !Ref PubPrivateVPC
+      VpcId: !Ref VPC
       Tags:
-        - Key: Network
-          Value: Public
+        - Key: Name
+          Value: !Sub ${EnvironmentName} Public Routes
 
-  PublicRoute:
-    Type: 'AWS::EC2::Route'
-    DependsOn: GatewayToInternet
+  DefaultPublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: InternetGatewayAttachment
     Properties:
       RouteTableId: !Ref PublicRouteTable
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId: !Ref InternetGateway
 
-  PublicSubnetRouteTableAssociation:
-    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+  G4PublicSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref PublicSubnet
       RouteTableId: !Ref PublicRouteTable
-     
-  NatGateway:
-    Type: "AWS::EC2::NatGateway"
-    DependsOn: NatPublicIP
-    Properties: 
-      AllocationId: !GetAtt NatPublicIP.AllocationId
-      SubnetId: !Ref PublicSubnet
-     
-  NatPublicIP:
-    Type: "AWS::EC2::EIP"
-    DependsOn: PubPrivateVPC
+      SubnetId: !Ref G4PublicSubnet1
+
+  G4PublicSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      Domain: vpc
-     
-  PrivateRouteTable:
-    Type: 'AWS::EC2::RouteTable'
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref G4PublicSubnet2
+
+
+  PrivateRouteTable1:
+    Type: AWS::EC2::RouteTable
     Properties:
-      VpcId: !Ref PubPrivateVPC
+      VpcId: !Ref VPC
       Tags:
-        - Key: Network
-          Value: Private
-      
-  PrivateRoute:
-    Type: 'AWS::EC2::Route'
+        - Key: Name
+          Value: !Sub ${EnvironmentName} Private Routes (AZ1)
+
+  DefaultPrivateRoute1:
+    Type: AWS::EC2::Route
     Properties:
-      RouteTableId: !Ref PrivateRouteTable
+      RouteTableId: !Ref PrivateRouteTable1
       DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGateway
-     
-  PrivateSubnetRouteTableAssociation:
-    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+      NatGatewayId: !Ref G4NatGateway1
+
+  G4PrivateSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref PrivateSubnet
-      RouteTableId: !Ref PrivateRouteTable
-  
+      RouteTableId: !Ref PrivateRouteTable1
+      SubnetId: !Ref G4PrivateSubnet1
+
+  PrivateRouteTable2:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName} Private Routes (AZ2)
+
+  DefaultPrivateRoute2:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable2
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref G4NatGateway2
+
+  G4PrivateSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable2
+      SubnetId: !Ref G4PrivateSubnet2
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: "G4filrouge-security-group"
+      GroupDescription: "Security group with a self-referencing inbound rule."
+      VpcId: !Ref VPC
+
+  SecurityGroupIngress:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref SecurityGroup
+      IpProtocol: "-1"
+      SourceSecurityGroupId: !Ref SecurityGroup
+
 Outputs:
-  VpcId:
-    Description: PubPrivateVPC of the newly created PubPrivateVPC
-    Value: !Ref 'PubPrivateVPC'
+  VPC:
+    Description: A reference to the created VPC
+    Value: !Ref VPC
+
+  PublicSubnets:
+    Description: A list of the public subnets
+    Value: !Join [ ",", [ !Ref G4PublicSubnet1, !Ref G4PublicSubnet2 ]]
+
+  PrivateSubnets:
+    Description: A list of the private subnets
+    Value: !Join [ ",", [ !Ref G4PrivateSubnet1, !Ref G4PrivateSubnet2 ]]
+
+  G4PublicSubnet1:
+    Description: A reference to the public subnet in the 1st Availability Zone
+    Value: !Ref G4PublicSubnet1
+
+  G4PublicSubnet2:
+    Description: A reference to the public subnet in the 2nd Availability Zone
+    Value: !Ref G4PublicSubnet2
+
+  G4PrivateSubnet1:
+    Description: A reference to the private subnet in the 1st Availability Zone
+    Value: !Ref G4PrivateSubnet1
+
+  G4PrivateSubnet2:
+    Description: A reference to the private subnet in the 2nd Availability Zone
+    Value: !Ref G4PrivateSubnet2
+
+  SecurityGroupIngress:
+    Description: Security group with self-referencing inbound rule
+    Value: !Ref SecurityGroupIngress

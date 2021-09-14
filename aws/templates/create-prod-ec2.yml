@@ -1,7 +1,3 @@
-# Un modèle d'instance EC2 qui contient les ressources et les paramètres pour :
-#     Groupe de sécurité (et ses règles)
-#     Instance EC2 /!\ La création de la paire de clé SSH ne peut pas être faite via cloud formation
-
 ---
 
 AWSTemplateFormatVersion: '2010-09-09'
@@ -18,7 +14,7 @@ Parameters:
   InstanceType:
     Description: WebServer EC2 instance type
     Type: String
-    Default: t2.micro
+    Default: t2.medium
     AllowedValues: [t2.nano, t2.micro, t2.small, t2.medium, t2.large, t2.xlarge, t2.2xlarge,
       t3.nano, t3.micro, t3.small, t3.medium, t3.large, t3.xlarge, t3.2xlarge,
       m4.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m4.10xlarge,
@@ -39,9 +35,10 @@ Parameters:
     AllowedPattern: (\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})
     ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
 
-  LatestAmiId:
-    Type:  'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
-    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+  InstanceImageId:
+    Description: EC2 Image Id from this region
+    Type: AWS::EC2::Image::Id
+    Default: ami-06602da18c878f98d # Ubuntu image
 
 Resources:
   EC2Instance:
@@ -50,19 +47,22 @@ Resources:
       InstanceType: !Ref 'InstanceType'
       SecurityGroups: [!Ref 'InstanceSecurityGroup']
       KeyName: !Ref 'KeyName'
-      ImageId: !Ref 'LatestAmiId'
+      ImageId: !Ref 'InstanceImageId'
+      Tags: 
+       - Key: Name
+         Value: groupe4-prod-filrouge
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Enable SSH access via port 22 and 80
+      GroupDescription: Enable SSH access via port 22 and 5000
       SecurityGroupIngress:
       - IpProtocol: tcp
         FromPort: 22
         ToPort: 22
         CidrIp: !Ref 'SSHLocation'
       - IpProtocol: tcp
-        FromPort: 80
-        ToPort: 80
+        FromPort: 5000
+        ToPort: 5000
         CidrIp: !Ref 'SSHLocation'
 
 Outputs:
