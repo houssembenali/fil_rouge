@@ -5,6 +5,7 @@ import shutil
 import os
 import utils
 import wordings
+import traceback
 
 # Ajoute le projet et ses informations au fichier de listing des projets. Si des erreurs sont rencontrées,
 #  renvoie une string pour tracer le soucis.
@@ -32,12 +33,12 @@ def add_project(resultat):
 def __is_url_exist_in_net(link):
     isurlvalid =True
     try:
-       for f in os.listdir(cs.TMP_CLONE_PATH):
-        if os.path.isdir(cs.TMP_CLONE_PATH+f):   
-           shutil.rmtree(os.path.abspath(cs.TMP_CLONE_PATH+f))
+       os.system("rm -rf "+cs.TMP_CLONE_PATH)
+       utils.check_temp_dir(cs.TMP_CLONE_PATH)
        git.Git(cs.TMP_CLONE_PATH).clone(link)    
     except git.exc.GitError:
         print("ERROR! "+ link +" does not exist")
+        traceback.print_exc()
         isurlvalid = False
     return isurlvalid
     
