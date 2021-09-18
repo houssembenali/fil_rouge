@@ -1,5 +1,4 @@
 import os
-from _ast import If
 import constants as cs
 
 import git
@@ -7,8 +6,10 @@ import markdown
 import md_toc
 from pathlib import Path
 from modules.parametrage import crud
-from modules.addproject.addprojet import checkTempDir
-from utils import viderDossier
+import utils
+import wordings
+
+EN_TETE_SOMMAIRE = "# SOMMAIRE \n"
 
 ###################################################################################
 ############ Service du module liste et publication des projets ###################
@@ -17,7 +18,7 @@ from utils import viderDossier
 
 ###  lire la liste du projet a partir du fichier 
 
-def getAllProject():
+def get_all_projects():
     
     if not os.path.exists(cs.PROJECT_FILE_PATH):
         f = open(cs.PROJECT_FILE_PATH, "w")
@@ -25,10 +26,8 @@ def getAllProject():
         
     list_projets=[]
     f = open(cs.PROJECT_FILE_PATH, "r")
-    Lines = f.readlines()
-    count = 0
-    for line in Lines:
-        count += 1
+    lines = f.readlines()
+    for line in lines:
         list_projets.append(line.split(";"))
     return list_projets
 
@@ -36,40 +35,40 @@ def getAllProject():
 '''
     A partir d'une adresse de dossier, récupérer la liste de tous les fichiers markdown
 '''
-def getListOfFiles(dirName):
-    # creation de list de fichiers et sous-dossier a partir de dossier parent stocker dans la variable "dirName"
-    listOfFile = os.listdir(dirName)
-    allFiles = list()
-    # parcourir la liste (composer de fichiers et sous-dossier)
-    for entry in listOfFile:
+def __get_list_of_files(dirname):
+    # création de la liste de fichiers et sous-dossiers à partir de dossier parent stocker dans la variable "dirName"
+    listofcontentindir = os.listdir(dirname)
+    allfilesindir = list()
+    # parcourir la liste (composée de fichiers et sous-dossiers)
+    for entry in listofcontentindir:
         # composition de l'adresse complette 
-        fullPath = os.path.join(dirName, entry)
+        entryfullpath = os.path.join(dirname, entry)
         # si l'élément est un dossier ALORS récupérer la liste des fichier et sous-dossier du contenu 
-        if os.path.isdir(fullPath):
-            allFiles = allFiles + getListOfFiles(fullPath)
+        if os.path.isdir(entryfullpath):
+            allfilesindir = allfilesindir + __get_list_of_files(entryfullpath)
         else:
             # récupérer uniquement les fichiers markdown
-            pathTab = fullPath.split(".")
+            pathTab = entryfullpath.split(".")
             if pathTab[len(pathTab)-1].upper() == "MD":
-                allFiles.append(fullPath)
+                allfilesindir.append(entryfullpath)
                 
-    return allFiles
+    return allfilesindir
 
 
 
 '''
     Cloner le projet dans le dossier de clonnage situé dans le dossier temporaire
 '''    
-def cloneProject(link):
-    checkTempDir(cs.TMP_CLONE_PATH)
+def __clone_project(link):
+    utils.check_temp_dir(cs.TMP_CLONE_PATH)
 
     # vider le dossier temporaire du clonage
-    viderDossier(cs.TMP_CLONE_PATH)
+    utils.vider_dossier(cs.TMP_CLONE_PATH)
 
     print("cloning ...")
     try:
         git.Git(cs.TMP_CLONE_PATH).clone(link.strip())
-    except:
+    except git.exc.CommandError:
         return False
     print("cloning ok")
 
@@ -77,47 +76,47 @@ def cloneProject(link):
 '''
     Méthode principal de la conversion et l'upload du projet
 '''  
-def publishFromFileById(id, name,link,isSommaire):
+def publish_from_file_by_id(link,issummary):
 	
-	bucketName = crud.get_bucket_name()
-	if bucketName == "":
-		return "Le nom du Bucket n'est pas configuré, merci de le configurer"
+	bucketname = crud.get_bucket_name()
+	if bucketname == "":
+		return wordings.NOM_BUCKET_NON_CONFIGURE
 	
-	projectName =os.path.splitext(os.path.basename(link))[0]
-	mainPath = cs.TMP_CLONE_PATH
+	projectname = os.path.splitext(os.path.basename(link))[0]
+	mainpath = cs.TMP_CLONE_PATH
 
-	isCloned = cloneProject(link)
-	if not isCloned:
-		return "le projet '" + projectName +"' non publié. Problème lors du clonage du répository GIT"
+	iscloned = __clone_project(link)
+	if not iscloned:
+		return wordings.PROJET_NON_PUBLIE_ERREUR_CLONAGE.format(name=projectname)
 	
     #Parcourir les fichiers MarkDown
-	lstFileMd = getListOfFiles(mainPath+ '/' +projectName)
-	for mdFile in lstFileMd:
-		with open(mdFile) as f:
+	listfilemd = __get_list_of_files(mainpath + '/' + projectname)
+	for mdfile in listfilemd:
+		with open(mdfile) as f:
 			try:
-    				mdContent = f.read()
-			except:
-				print("Erreur de lécture du fichier : "+mdFile)
+    				mdcontent = f.read()
+			except Exception:
+				print("Erreur de lecture du fichier : " + mdfile)
             #Ajout Sommaire
-			if isSommaire:
-				mdContent="# SOMMAIRE \n" + md_toc.build_toc(mdFile)+mdContent
+			if issummary:
+				mdcontent=EN_TETE_SOMMAIRE + md_toc.build_toc(mdfile) + mdcontent
 			#Conversion du contenu MD vers contenu HTML 
-			htmlContent = markdown.markdown(mdContent)
+			htmlcontent = markdown.markdown(mdcontent)
             # Préparation des variable util pour réspécter l'arborescence des dossiers et sous-dossier pour les fichiers HTML 
-			tabPath = mdFile.split("/")
+			tabpath = mdfile.split("/")
             # extraction nom du fichier
-			fileName = tabPath[len(tabPath)-1]
-			fileName = os.path.splitext(fileName)[0]
+			filename = tabpath[len(tabpath)-1]
+			filename = os.path.splitext(filename)[0]
             # extraction des sous-dossiers
-			subFolder = mdFile.replace(mainPath,"").replace(fileName+".md","")
+			subfolder = mdfile.replace(mainpath,"").replace(filename+".md","")
             # Vérifier et créer l'arborescence des sous-dossiers
-			Path(mainPath+"/html/"+subFolder).mkdir(parents=True, exist_ok=True)
+			Path(mainpath+"/html/"+subfolder).mkdir(parents=True, exist_ok=True)
             # Génération du fichier HTML
-			with open (mainPath+"/html/"+subFolder+fileName+".html", "w") as fHtml:
-				fHtml.write(htmlContent)
+			with open (mainpath+"/html/"+subfolder+filename+".html", "w") as fHtml:
+				fHtml.write(htmlcontent)
     #Partie upload
 
-	print('Upload du projet '+projectName)
-	os.system('aws s3 sync '+mainPath+'/html/'+projectName+ " s3://"+bucketName + " --acl bucket-owner-full-control --acl public-read")
-	viderDossier(cs.TMP_CLONE_PATH)
+	print('Upload du projet '+projectname)
+	os.system('aws s3 sync '+mainpath+'/html/'+projectname+ " s3://"+bucketname + " --acl public-read")
+	utils.vider_dossier(cs.TMP_CLONE_PATH)
 	return ""
