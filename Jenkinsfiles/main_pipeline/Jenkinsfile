@@ -1,0 +1,52 @@
+pipeline {
+
+    stage("Git Clone"){
+
+        git branch: 'main', url : 'https://github.com/houssembenali/fil_rouge'
+    }
+
+    stage("Docker build and run unit testing container"){
+        sh 'echo BEGIN UNIT TESTING'
+        sh 'docker version'
+        sh 'docker build -t githoster-unit-test-image ./docker/Dockerfiles/unit-testing-Dockerfile/'
+        sh 'docker run -d --name githoster-unit-test-container githoster-unit-test-image'
+    }
+
+    stage("Get back tests reports from githoster-unit-test container"){
+        sh 'rm -rf rapports'
+        sh 'mkdir rapports'
+        sh 'docker cp githoster-unit-test-container:githoster-app/rapports/resultats.xml /rapports'
+    }
+
+    stage("Clean githoster-unit-test container"){
+        sh 'docker stop githoster-unit-test-container'
+        sh 'docker rm githoster-unit-test-container'
+        sh 'docker rmi githoster-unit-test-image'
+        sh 'echo END UNIT TESTING'
+    }
+
+    stage("Docker build app container"){
+        sh 'docker version'
+        sh 'docker build -t githoster-app ./docker/Dockerfiles/app-Dockerfile/'
+    }
+
+    withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'PASSWORD')]) {
+        sh 'docker login -u githoster -p $PASSWORD'
+    }
+
+    stage("Push Image to Docker Hub"){
+        sh 'docker push  githoster/githoster-app:$MAJOR_VERSION$MINOR_VERSION'
+    }
+
+    stage("Deploy app on EKS"){
+        sh 'kubectl apply -f docker/Manifests-k8s/githoster-prod-dpl.yml'
+    }
+        
+    stage('Package and deliver') {
+        steps {
+            sh 'gradle --version'
+            sh 'gradle up'
+        }
+    }
+    
+ }

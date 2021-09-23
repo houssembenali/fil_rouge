@@ -1,6 +1,10 @@
 import csv
 import os
 import shutil
+import wordings
+
+def is_index_valid(index):
+    return index > 0
 
 # Supprime un projet du fichier de listing à l'aide de son id. Retourne un message 
 # d'erreur si le projet n'est pas trouvé.
@@ -11,8 +15,8 @@ def delete_from_file_by_id(id,path):
     projects_file.close()
     # supprimer la ligne.
     index = __find_from_file_by_id(id,path)
-    if index < 0:
-        messageretour = 'Erreur de suppression, id non trouvé.'
+    if not is_index_valid(index):
+        messageretour = wordings.PROJET_NON_SUPPRIME_ID_INTROUVABLE
     else:
         del lines[index]
         # Réecrire le fichier après suppression de la ligne.

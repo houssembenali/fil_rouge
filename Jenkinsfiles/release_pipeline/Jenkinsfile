@@ -1,0 +1,28 @@
+pipeline {
+
+    stage("Git Clone"){
+
+        git branch: 'release-*', url : 'https://github.com/houssembenali/fil_rouge'
+    }
+
+    stage("Docker build and run unit testing container"){
+        sh 'echo BEGIN UNIT TESTING'
+        sh 'docker version'
+        sh 'docker build -t githoster-unit-test-image ./docker/Dockerfiles/unit-testing-Dockerfile/'
+        sh 'docker run -d --name githoster-unit-test-container githoster-unit-test-image'
+    }
+
+    stage("Get back tests reports from githoster-unit-test container"){
+        sh 'rm -rf rapports'
+        sh 'mkdir rapports'
+        sh 'docker cp githoster-unit-test-container:githoster-app/rapports/resultats.xml /rapports'
+    }
+
+    stage("Clean githoster-unit-test container"){
+        sh 'docker stop githoster-unit-test-container'
+        sh 'docker rm githoster-unit-test-container'
+        sh 'docker rmi githoster-unit-test-image'
+        sh 'echo END UNIT TESTING'
+    }
+    
+ }
