@@ -11,16 +11,8 @@ task purge(type:Delete) {
   delete 'build/*.zip'
 }
 
-task dep(type:Exec, dependsOn: purge) {
-  println 'Installing dependencies'
-    executable 'sh'
-    args '-c', 'pip3 install -r requirements.txt'
-    standardOutput = new ByteArrayOutputStream()
-    ext.output = { return standardOutput.toString() }
-}
-
 def tarfile = "project-" + version
-task packageDistribution(type: Zip, dependsOn: dep) {
+task packageDistribution(type: Zip, dependsOn: purge) {
     from ('docker/webapp') { into 'app' }
     from ('doc') { into 'doc' }
     archiveFileName = tarfile + ".zip"
