@@ -2,10 +2,10 @@ FROM python:alpine
 
 WORKDIR /githoster-app
 
-COPY /docker/webapp/src/* app/
+COPY app/ app/
 
 
-COPY /docker/webapp/requirements.txt .
+COPY app/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install pytest
