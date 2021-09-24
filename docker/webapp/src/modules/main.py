@@ -7,7 +7,3 @@ def index():
     return render_template('index.html')
 
 
-@main.errorhandler(404)
-def not_found(e):
-    """Page not found."""
-    return render_template("404.html")
