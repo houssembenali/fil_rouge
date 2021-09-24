@@ -30,8 +30,6 @@ def login_post():
     name = request.form.get('name')
     user = User.query.filter_by(name=name).first()
 
-    print (user.name)
-
     # check if the user actually exists
     # take the user-supplied password, hash it, and compare it to the hashed password in the database
     if not user or not check_password_hash(user.password, password):
