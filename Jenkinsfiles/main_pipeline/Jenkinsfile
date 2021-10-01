@@ -1,45 +1,66 @@
 pipeline {
 
     stage("Git Clone"){
-
-        git branch: 'main', url : 'https://github.com/houssembenali/fil_rouge'
+        steps{
+            git branch: 'US-25-improve-deployment-and-delivery', url : 'https://github.com/houssembenali/fil_rouge'
+        }
     }
 
     stage("Docker build and run unit testing container"){
-        sh 'echo BEGIN UNIT TESTING'
-        sh 'docker version'
-        sh 'docker build -t githoster-unit-test-image ./docker/Dockerfiles/unit-testing-Dockerfile/'
-        sh 'docker run -d --name githoster-unit-test-container githoster-unit-test-image'
+        steps{
+            sh 'echo ABORTED STEP : Docker build and run unit testing container'
+            /*sh 'echo BEGIN UNIT TESTING'
+            sh 'docker version'
+            sh 'mkdir ./docker/Dockerfiles/unit-testing-Dockerfile/app'
+            sh 'cp ./docker/wepapp/ ./docker/Dockerfiles/unit-testing-Dockerfile/app/'
+            sh 'docker build -t githoster-unit-test-image ./docker/Dockerfiles/unit-testing-Dockerfile/'
+            sh 'docker run -d --name githoster-unit-test-container githoster-unit-test-image'*/
+        }
     }
 
     stage("Get back tests reports from githoster-unit-test container"){
-        sh 'rm -rf rapports'
-        sh 'mkdir rapports'
-        sh 'docker cp githoster-unit-test-container:githoster-app/rapports/resultats.xml /rapports'
+        steps{
+            sh 'echo ABORTED STEP : Get back tests reports from githoster-unit-test container'
+            /*sh 'rm -rf rapports'
+            sh 'mkdir rapports'
+            sh 'docker cp githoster-unit-test-container:githoster-app/rapports/resultats.xml /rapports'*/
+        }
     }
 
     stage("Clean githoster-unit-test container"){
-        sh 'docker stop githoster-unit-test-container'
-        sh 'docker rm githoster-unit-test-container'
-        sh 'docker rmi githoster-unit-test-image'
-        sh 'echo END UNIT TESTING'
+        steps{
+            sh 'echo ABORTED STEP : Clean githoster-unit-test container'
+            /*sh 'docker stop githoster-unit-test-container'
+            sh 'docker rm githoster-unit-test-container'
+            sh 'docker rmi githoster-unit-test-image'
+            sh 'echo END UNIT TESTING'*/
+        }
     }
 
     stage("Docker build app container"){
-        sh 'docker version'
-        sh 'docker build -t githoster-app ./docker/Dockerfiles/app-Dockerfile/'
-    }
-
-    withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'PASSWORD')]) {
-        sh 'docker login -u githoster -p $PASSWORD'
+        steps{
+            sh 'docker version'
+            sh 'docker build -t githoster-app ./docker/Dockerfiles/app-Dockerfile/'
+        }
     }
 
     stage("Push Image to Docker Hub"){
-        sh 'docker push  githoster/githoster-app:$MAJOR_VERSION$MINOR_VERSION'
+        environment{
+            DOCKERHUB_USER = credentials('dockerhub-user-cred')
+            DOCKERHUB_PASSWORD = credentials('dockerhub-password-cred')
+        }
+        steps{
+            sh 'docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD'
+            sh 'docker tag githoster-app:latest githoster/githoster-app:$MAJOR_VERSION:$MINOR_VERSION'
+            sh 'docker push githoster/githoster-app:$MAJOR_VERSION:$MINOR_VERSION'
+        }
     }
 
     stage("Deploy app on EKS"){
-        sh 'kubectl apply -f docker/Manifests-k8s/githoster-prod-dpl.yml'
+        steps{
+            sh 'echo ABORTED STEP : Deploy app on EKS'
+            /*sh 'kubectl apply -f docker/Manifests-k8s/githoster-prod-dpl.yml'*/   
+        }
     }
         
     stage('Package and deliver') {

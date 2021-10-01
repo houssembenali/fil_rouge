@@ -7,6 +7,8 @@ COPY app/ app/
 COPY app/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
+RUN apt update
+RUN apt install -y git
 
 WORKDIR /githoster/app/src
 
@@ -17,8 +19,6 @@ RUN flask db init
 RUN flask db migrate -m "Users table." 
 RUN flask db upgrade
 
-WORKDIR /githoster/app
-
 EXPOSE 5000
 
-CMD [ "flask", "./src/" ]
+CMD [ "flask", "run", "--host", "0.0.0.0" ]
